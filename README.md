@@ -13,6 +13,10 @@
 `We propose a novel method to accurately estimate the lateral distance of a nearby vehicle to lane markers by the fusion of vision and lidar sensors as well as the fusion of deep neural networks in 2D and 3D space.`
 
 ## [3] Project Pipeline
+
+<img width="1268" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/139428433-30e16219-0120-427c-8734-0794f9f40f71.png">
+
+
 ### [3-1] : 라이다의 이미지 상 Projection - (1) 전체에 대한 것, (2) 레인에 대한 것
 
 
