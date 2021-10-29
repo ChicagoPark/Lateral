@@ -22,9 +22,9 @@
 ### [3-3] : Image 상의 Lane Detction 에 대응되는 3D 상의 Point 찾기
 
 
-### [3-4] : 3D 상의 P
+### [3-4] : 3D 상의 Point 를 활용하여, 2차 곡선을 얻는다.
 
 
-### [3-5]
+### [3-5] : Object Detection 의 타겟지점과 Lane 까지의 최단거리를 측정
 
 ## Poster image for KSAE Conference
