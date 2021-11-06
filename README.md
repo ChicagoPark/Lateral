@@ -1,9 +1,7 @@
 # vehicle_lateral_positioning
 `Lateral distance, Lateral position, Sensor fusion, Deep learning, Neural network, Autonomous vehicle`
 
-## `Poster PDF File`
-
-<img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/140601740-16352ace-6607-4854-a636-a957bbc9554b.png">
+<img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/140601818-918c74f5-7535-4b6f-80b5-93d539dd48d4.jpg">
 
 [vehicle_lateral_positioning_poster.pdf](https://github.com/ChicagoPark/vehicle_lateral_positioning/files/7490034/vehicle_lateral_positioning_poster.pdf)
 
