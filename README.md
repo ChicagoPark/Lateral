@@ -45,3 +45,25 @@
 
 ### [3-5] : Object Detection 의 타겟지점과 Lane 까지의 최단거리를 측정
 
+
+## 코드 움직임
+1️⃣  이미지 상 Lane Detection , 점 추출
+
+~/lee_ws/src/AB3DMOT $ python KaAI_Image_Process.py
+
+출력하는 것 : 레인에 대한 픽셀
+
+2️⃣  Projection 및 포인트 매칭작업
+
+~/chicago_ws $ rosrun first_pkg KaAI_Point_Processing
+
+출력하는 것 : Lane 에 대해 매칭하여 얻은 점
+
+3️⃣  3D 상에 찍힌 점에 대해 다시 방정식을 도출하기
+
+~/lee_ws/src/AB3DMOT $ python 3D_Point_Equation.py
+
+4️⃣  3D 상에 해당좌표에 대해 Marker 를 명시해주기
+
+~/chicago_ws $ rosrun first_pkg 3D_Lane_Marker
+
