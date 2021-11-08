@@ -9,7 +9,7 @@
 //#include <opencv2/opencv.hpp>
 #include <cv_bridge/cv_bridge.h>
 //#include <opencv2/highgui.hpp>
-#include <image_transport/image_transport.h>
+//#include <image_transport/image_transport.h>
 #include <sensor_msgs/image_encodings.h>
 #include <cv_bridge/cv_bridge.h>
 #include <pcl/segmentation/sac_segmentation.h>
@@ -28,8 +28,8 @@ int main(int argc, char** argv)
   ros::NodeHandle nh;
   double x_cloud; double y_cloud; double z_cloud;
 
-  ros::Publisher marker_pub_left = nh.advertise<visualization_msgs::Marker>("visualization_marker_left", 10);
-  ros::Publisher marker_pub_right = nh.advertise<visualization_msgs::Marker>("visualization_marker_right", 10);
+  ros::Publisher marker_pub_left = nh.advertise<visualization_msgs::Marker>("visualization_marker_left_eq", 10);
+  ros::Publisher marker_pub_right = nh.advertise<visualization_msgs::Marker>("visualization_marker_right_eq", 10);
 
   // 과거 코드로 부터 붙여넣기를 하는 부분
   /*
@@ -41,10 +41,11 @@ int main(int argc, char** argv)
   float * right_lane_point_y = new float[100];
   float * right_lane_point_z = new float[100];
   */
-  float left_lane_equat_point_x[] = {0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 ,32 ,33 ,34 ,35 ,36 ,37 ,38 ,39 ,40 ,41 ,42 ,43 ,44 ,45 ,46 ,47 ,48 ,49 ,50 ,51 ,52 ,53 ,54 ,54 };
-  float left_lane_equat_point_y[] = {1.2184881212680339 ,1.2234946770642174 ,1.22865057598572 ,1.233955818032542 ,1.239410403204683 ,1.2450143315021431 ,1.2507676029249226 ,1.256670217473021 ,1.2627221751464388 ,1.2689234759451757 ,1.2752741198692317 ,1.2817741069186068 ,1.2884234370933012 ,1.2952221103933148 ,1.3021701268186474 ,1.3092674863692992 ,1.3165141890452703 ,1.3239102348465606 ,1.3314556237731698 ,1.3391503558250983 ,1.346994431002346 ,1.3549878493049128 ,1.363130610732799 ,1.3714227152860041 ,1.3798641629645283 ,1.388454953768372 ,1.3971950876975345 ,1.4060845647520164 ,1.4151233849318174 ,1.4243115482369375 ,1.4336490546673768 ,1.4431359042231353 ,1.452772096904213 ,1.4625576327106098 ,1.4724925116423258 ,1.482576733699361 ,1.4928102988817153 ,1.5031932071893888 ,1.5137254586223814 ,1.5244070531806933 ,1.535237990864324 ,1.5462182716732742 ,1.5573478956075437 ,1.568626862667132 ,1.5800551728520398 ,1.5916328261622665 ,1.6033598225978125 ,1.6152361621586777 ,1.627261844844862 ,1.6394368706563656 ,1.651761239593188 ,1.6642349516553299 ,1.6768580068427907 ,1.689630405155571 ,1.7025521465936704 ,1.7025521465936704 };
-  float right_lane_equat_point_x[] = {0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 ,32 ,33 ,34 ,35 ,36 ,37 ,38 ,39 ,40 ,41 ,42 ,43 ,44 ,45 ,46 ,47 ,48 ,49 ,50 ,51 ,52 ,53 ,54 ,54 };
-  float right_lane_equat_point_y[] = {-1.800654410784622 ,-1.7858535165122043 ,-1.7711158534469436 ,-1.75644142158884 ,-1.7418302209378935 ,-1.7272822514941042 ,-1.712797513257472 ,-1.698376006227997 ,-1.6840177304056791 ,-1.6697226857905183 ,-1.6554908723825148 ,-1.6413222901816682 ,-1.627216939187979 ,-1.6131748194014468 ,-1.5991959308220716 ,-1.5852802734498537 ,-1.571427847284793 ,-1.5576386523268893 ,-1.5439126885761427 ,-1.5302499560325533 ,-1.516650454696121 ,-1.5031141845668459 ,-1.489641145644728 ,-1.4762313379297671 ,-1.4628847614219633 ,-1.4496014161213169 ,-1.4363813020278273 ,-1.4232244191414951 ,-1.4101307674623198 ,-1.3971003469903018 ,-1.384133157725441 ,-1.3712291996677373 ,-1.3583884728171904 ,-1.345610977173801 ,-1.3328967127375688 ,-1.3202456795084936 ,-1.3076578774865752 ,-1.2951333066718145 ,-1.2826719670642106 ,-1.270273858663764 ,-1.2579389814704744 ,-1.2456673354843422 ,-1.2334589207053668 ,-1.2213137371335487 ,-1.2092317847688876 ,-1.1972130636113838 ,-1.185257573661037 ,-1.1733653149178473 ,-1.1615362873818151 ,-1.1497704910529398 ,-1.1380679259312214 ,-1.1264285920166606 ,-1.1148524893092566 ,-1.1033396178090098 ,-1.0918899775159203 ,-1.0918899775159203 };
+float left_lane_equat_point_x[] = {0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 ,32 ,33 ,34 ,35 ,36 ,37 ,38 ,39 ,40 ,41 ,42 ,43 ,44 ,45 ,46 ,47 ,48 };
+float left_lane_equat_point_y[] = {1.5042456262073003 ,1.4944940898674601 ,1.4857232661162356 ,1.4779331549536268 ,1.471123756379634 ,1.4652950703942567 ,1.4604470969974954 ,1.4565798361893496 ,1.45369328796982 ,1.4517874523389056 ,1.4508623292966074 ,1.4509179188429249 ,1.451954220977858 ,1.453971235701407 ,1.4569689630135718 ,1.4609474029143523 ,1.4659065554037485 ,1.4718464204817605 ,1.4787669981483884 ,1.486668288403632 ,1.4955502912474914 ,1.5054130066799665 ,1.5162564347010574 ,1.528080575310764 ,1.5408854285090865 ,1.5546709942960246 ,1.5694372726715786 ,1.5851842636357483 ,1.6019119671885338 ,1.6196203833299352 ,1.6383095120599522 ,1.657979353378585 ,1.6786299072858335 ,1.7002611737816977 ,1.722873152866178 ,1.746465844539274 ,1.7710392488009856 ,1.796593365651313 ,1.8231281950902563 ,1.850643737117815 ,1.87913999173399 ,1.9086169589387803 ,1.9390746387321864 ,1.9705130311142085 ,2.0029321360848464 ,2.0363319536441002 ,2.0707124837919695 ,2.1060737265284546 ,2.1424156818535556 };
+float right_lane_equat_point_x[] = {0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 ,32 ,33 ,34 ,35 ,36 ,37 ,38 ,39 ,40 ,41 ,42 ,43 ,44 ,45 ,46 ,47 ,48 };
+float right_lane_equat_point_y[] = {-2.1144090795931727 ,-2.077728823542629 ,-2.0417160658553533 ,-2.0063708065313444 ,-1.9716930455706034 ,-1.9376827829731296 ,-1.9043400187389234 ,-1.8716647528679846 ,-1.8396569853603133 ,-1.8083167162159093 ,-1.777643945434773 ,-1.747638673016904 ,-1.7183008989623025 ,-1.6896306232709684 ,-1.6616278459429017 ,-1.6342925669781025 ,-1.6076247863765707 ,-1.5816245041383064 ,-1.5562917202633095 ,-1.5316264347515802 ,-1.5076286476031182 ,-1.4842983588179237 ,-1.4616355683959967 ,-1.439640276337337 ,-1.4183124826419449 ,-1.3976521873098202 ,-1.377659390340963 ,-1.3583340917353732 ,-1.339676291493051 ,-1.321685989613996 ,-1.3043631860982086 ,-1.2877078809456886 ,-1.2717200741564358 ,-1.2563997657304509 ,-1.2417469556677332 ,-1.227761643968283 ,-1.2144438306321002 ,-1.201793515659185 ,-1.189810699049537 ,-1.1784953808031566 ,-1.1678475609200438 ,-1.1578672394001983 ,-1.1485544162436203 ,-1.1399090914503098 ,-1.1319312650202664 ,-1.124620936953491 ,-1.1179781072499826 ,-1.1120027759097417 ,-1.1066949429327684 };
+  float height = -1.50115;
   int len_lane_pixel = sizeof(left_lane_equat_point_x)/ sizeof(left_lane_equat_point_x[0]);
   cout << len_lane_pixel << endl;
   ros::Rate loop_rate(4);
@@ -54,7 +55,7 @@ int main(int argc, char** argv)
     visualization_msgs::Marker left_points, left_line_strip, left_line_list;
     left_points.header.frame_id = left_line_strip.header.frame_id = left_line_list.header.frame_id = "livox_frame";
     left_points.header.stamp = left_line_strip.header.stamp = left_line_list.header.stamp = ros::Time::now();
-    left_points.ns = left_line_strip.ns = left_line_list.ns = "points_and_lines";
+    left_points.ns = left_line_strip.ns = left_line_list.ns = "points_and_lines_eq";
     left_points.action = left_line_strip.action = left_line_list.action = visualization_msgs::Marker::ADD;
     left_points.pose.orientation.w = left_line_strip.pose.orientation.w = left_line_list.pose.orientation.w = 1.0;
     left_points.id = 0;
@@ -86,7 +87,7 @@ int main(int argc, char** argv)
       geometry_msgs::Point p_l;
       p_l.x = left_lane_equat_point_x[i];
       p_l.y = left_lane_equat_point_y[i];
-      p_l.z = 1;                            // z 값은 없으므로 1 로 한다.
+      p_l.z = height;                            // z 값은 없으므로 1 로 한다.
       left_points.points.push_back(p_l);
       left_line_strip.points.push_back(p_l); 
       // The line list needs two points for each line
@@ -98,7 +99,7 @@ int main(int argc, char** argv)
     visualization_msgs::Marker right_points, right_line_strip, right_line_list;
     right_points.header.frame_id = right_line_strip.header.frame_id = right_line_list.header.frame_id = "livox_frame";
     right_points.header.stamp = right_line_strip.header.stamp = right_line_list.header.stamp = ros::Time::now();
-    right_points.ns = right_line_strip.ns = right_line_list.ns = "points_and_lines";
+    right_points.ns = right_line_strip.ns = right_line_list.ns = "points_and_lines_eq";
     right_points.action = right_line_strip.action = right_line_list.action = visualization_msgs::Marker::ADD;
     right_points.pose.orientation.w = right_line_strip.pose.orientation.w = right_line_list.pose.orientation.w = 1.0;
     right_points.id = 0;
@@ -131,7 +132,7 @@ int main(int argc, char** argv)
       geometry_msgs::Point p_r;
       p_r.x = right_lane_equat_point_x[i];
       p_r.y = right_lane_equat_point_y[i];
-      p_r.z = 1;
+      p_r.z = height;
       right_points.points.push_back(p_r);
       right_line_strip.points.push_back(p_r); 
       // The line list needs two points for each line
