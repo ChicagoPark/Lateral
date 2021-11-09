@@ -49,7 +49,7 @@ int main(int argc, char** argv)
   
   sensor_msgs::PointCloud2 ROS_cloud;
 
-  //pcl::toROSMsg(*PCD_cloud, ROS_cloud);
+  pcl::toROSMsg(*cloud, ROS_cloud);
   
   ROS_cloud.header.frame_id = "livox_frame";
 
