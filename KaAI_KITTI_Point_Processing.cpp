@@ -216,8 +216,8 @@ int main(int argc, char** argv)
     // 좌측 Lane 우측 Lane 에 대해서 오버랩 부분 처리하기
     for(int i = 0; i < len_lane_pixel; i+=1)
     {
-      if((int(pt_o.x) >= left_lane_all_x[i])&& (int(pt_o.x) <= left_lane_all_x[i]) && (int(pt_o.y) <= left_lane_all_y[i]) && (int(pt_o.y) >= left_lane_all_y[i]))
-      //if((int(pt_o.x) == left_lane_all_x[i]) && (int(pt_o.y) == left_lane_all_y[i]))
+      if((int(pt_o.x) == left_lane_all_x[i]) && (int(pt_o.y) == left_lane_all_y[i]))
+      #if((int(pt_o.x) >= left_lane_all_x[i])&& (int(pt_o.x) <= left_lane_all_x[i]) && (int(pt_o.y) <= left_lane_all_y[i]) && (int(pt_o.y) >= left_lane_all_y[i]))
       {
         left_lane_point_x[count_left] = X.at<double>(0,0);
         left_lane_point_y[count_left] = X.at<double>(1,0);
