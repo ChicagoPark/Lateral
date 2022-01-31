@@ -9,7 +9,8 @@
 ## [1] Project Goal
 <img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/139383767-c6116f15-713e-4ddb-9500-605f346a84ea.jpeg">
 
-`주변 차량의 차선에 대한 정확한 횡방향 거리 정보를 얻어오는 것이 목표`
+`Goal: Obtaining accurate lateral distance between vehicles and adjacent lanes`
+
 
 ## [2] Project Motivation
 `In advanced driving assistance systems or autonomous driving systems, accurate localization of surrounding vehicles is very important for path planning and anomaly detection through monitoring and predicting the movement and behavior of the vehicles.`
@@ -17,34 +18,51 @@
 ## [3] Essential Idea
 `We propose a novel method to accurately estimate the lateral distance of a nearby vehicle to lane markers by the fusion of vision and lidar sensors as well as the fusion of deep neural networks in 2D and 3D space.`
 
-## [3] Project Pipeline
+## [4] Project Pipeline
 
 <img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/139428433-30e16219-0120-427c-8734-0794f9f40f71.png">
 
+<img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151820935-0ea2ff9a-f51b-4e29-bf96-2df0137be4ef.png">
 
-### [3-1] : 라이다의 이미지 상 Projection - (1) 전체에 대한 것, (2) 레인에 대한 것
+## [5] Result
+
+<img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821185-27cdca71-a7a0-4550-abd4-c7e4576170c8.png">
+
+## [6] Expected Benefits
+<img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821453-0446fe68-bac1-4a4c-b7a4-f920bce0f7bd.png">
+
+
+
+
+
+### [3-1]: Projection based Point Cloud on image
 
 https://github.com/ChicagoPark/LiDAR_Projection
 
-### [3-2] : Image 상의 Lane Detection
+### [3-2] : Lane Detection on Image
+
+#### Getting Quadratic Equation about Lane on image domain
 
 
-#### Quadratic Function about Lane on image domain
-
-
-### [3-3] : Image 상의 Lane Detction 에 대응되는 3D 상의 Point 찾기
+### [3-3] : Finding points on 3D corresponding to Lane Detection on Image
 
 
 #### `Obtain quadratic function for the lane on the 3D, and the overlapping part of the Point cloud is expressed with red columns.`
 
 
-### [3-4] : 3D 상의 Point 를 활용하여, 2차 곡선을 얻는다.
-
+### [3-4]: A quadratic curve is obtained using the points on 3D.
 
 
 #### Quadratic Function about Lane on 3D domain
 
-### [3-5] : Object Detection 의 타겟지점과 Lane 까지의 최단거리를 측정
+### [3-5]: Measure the shortest distance to the target point and lane of the object detection.
+
+
+
+
+
+
+
 
 
 ##  코드 움직임
