@@ -20,21 +20,38 @@
 
 ## [4] Project Pipeline
 
-<img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/139428433-30e16219-0120-427c-8734-0794f9f40f71.png">
+<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/139428433-30e16219-0120-427c-8734-0794f9f40f71.png">
 
-<img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151820935-0ea2ff9a-f51b-4e29-bf96-2df0137be4ef.png">
+<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151820935-0ea2ff9a-f51b-4e29-bf96-2df0137be4ef.png">
 
 ## [5] Result
 
-<img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821185-27cdca71-a7a0-4550-abd4-c7e4576170c8.png">
+<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821185-27cdca71-a7a0-4550-abd4-c7e4576170c8.png">
 
 ## [6] Expected Benefits
-<img width="800" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821453-0446fe68-bac1-4a4c-b7a4-f920bce0f7bd.png">
+<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821453-0446fe68-bac1-4a4c-b7a4-f920bce0f7bd.png">
 
 
+##  CODE Explanation
 
+### 1️⃣KaAI_Image_Process.py
+```python
+Detect the lanes on the image. (output: Pixel locations of lanes)
+```
+### 2️⃣KaAI_Point_Processing.py
+```python
+Match the corresponding point cloud with lane pixels (output: Coordinates of matched 3D points)
+```
+### 3️⃣3D_Point_Equation.py
+```python
+Get quadratic equations on 3D (output: coefficient of quadratic equations)
+```
+### 4️⃣3D_Lane_Marker.py
+```python
+Visualize overlapped lanes (output: visualizing RVIZ)
+```
 
-
+<!--
 ### [3-1]: Projection based Point Cloud on image
 
 https://github.com/ChicagoPark/LiDAR_Projection
@@ -51,18 +68,11 @@ https://github.com/ChicagoPark/LiDAR_Projection
 
 
 ### [3-4]: A quadratic curve is obtained using the points on 3D.
-
+'''
 
 #### Quadratic Function about Lane on 3D domain
 
 ### [3-5]: Measure the shortest distance to the target point and lane of the object detection.
-
-
-
-
-
-
-
 
 
 ##  코드 움직임
@@ -85,6 +95,8 @@ https://github.com/ChicagoPark/LiDAR_Projection
 4️⃣  3D 상에 해당좌표에 대해 Marker 를 명시해주기
 
 ~/chicago_ws $ rosrun first_pkg 3D_Lane_Marker
+
+-->
 
 ## Certificate
 
