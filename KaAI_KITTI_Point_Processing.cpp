@@ -52,15 +52,9 @@ int main(int argc, char** argv)
   ros::Publisher marker_pub_left = nh.advertise<visualization_msgs::Marker>("visualization_marker_left", 10);
   ros::Publisher marker_pub_right = nh.advertise<visualization_msgs::Marker>("visualization_marker_right", 10);
 
-  //ros::Publisher pub1 = nh.advertise<sensor_msgs::ImagePtr> ("image", 1);
-  //pcl::io::loadPCDFile<pcl::PointXYZI> ("/home/kaai/chicago_ws/src/first_pkg/src/Kitti_File/pcd/1039.pcd", *cloud);
-  //pcl::io::loadPCDFile<pcl::PointXYZI> ("/home/kaai/chicago_ws/src/first_pkg/src/KITTI/pcd/0000000215.pcd", *cloud);
   pcl::io::loadPCDFile<pcl::PointXYZI> ("/home/kaai/chicago_ws/src/first_pkg/src/KITTI/pcd/0000000200.pcd", *cloud);
   Mat color_img = imread("/home/kaai/chicago_ws/src/first_pkg/src/KITTI/image/0000000200.png",IMREAD_COLOR);
 
-  //000021.png  2090899988.pcd
-
-  //베스트 : 000030.png  2101599309.pcd
   //RANSAC Section
   pcl::SACSegmentation<pcl::PointXYZI> seg;
   pcl::PointIndices::Ptr inliers(new pcl::PointIndices);
@@ -73,18 +67,18 @@ int main(int argc, char** argv)
   seg.setInputCloud(cloud);
   seg.segment(*inliers, *coefficients);
 
-  if(inliers->indices.size() == 0)            // 0일때, 우리는 우리 데이터에 적합한 모델을 찾지 못했다는 것을 의미한다.
+  if(inliers->indices.size() == 0)
   {
       std::cout << "Could not estimate a planar model for the given dataset." << std::endl;
   }
 
-  for(int index : inliers->indices)       //inliers가 가지는 모든 인덱스 값에 해당하는 cloud값을 planeCloud에 넣어준다.
+  for(int index : inliers->indices)
   {
       PCD_cloud_p->points.push_back(cloud->points[index]);
   }
 
   pcl::ExtractIndices<pcl::PointXYZI> extract;
-  extract.setInputCloud(cloud);       //이 reference cloud 에서 inliers에 해당하는 모든 포인트가 사라져서 obstCloud 만 남게된다.
+  extract.setInputCloud(cloud);
   extract.setIndices(inliers);
   extract.setNegative(true);
   extract.filter(*PCD_cloud_o);
@@ -92,39 +86,18 @@ int main(int argc, char** argv)
   sensor_msgs::PointCloud2 ROS_cloud_o;
   sensor_msgs::PointCloud2 ROS_cloud_p;
 
-/*
-  //toPCL을 하여 fromPCL을 사용하기위한 선언
-  pcl::PCLPointCloud2 * PCL_cloud_o(new pcl::PCLPointCloud2);
-  pcl::PCLPointCloud2 * PCL_cloud_p(new pcl::PCLPointCloud2);
-
-  pcl::toPCLPointCloud2(*PCD_cloud_o, *PCL_cloud_o);
-  pcl::toPCLPointCloud2(*PCD_cloud_p, *PCL_cloud_p);
-  pcl_conversions::fromPCL(*PCL_cloud_o, ROS_cloud_o);
-  pcl_conversions::fromPCL(*PCL_cloud_p, ROS_cloud_p);
-*/
   pcl::toROSMsg(*PCD_cloud_o, ROS_cloud_o);
   pcl::toROSMsg(*PCD_cloud_p, ROS_cloud_p);
   
   ROS_cloud_o.header.frame_id = "livox_frame";
   ROS_cloud_p.header.frame_id = "livox_frame";
-
-
-
-
-  //img=cv::imread("/home/kaai/chicago_ws/src/first_pkg/src/Kitti_File/001013.png");
-
-  //sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", img).toImageMsg();
-
-  //Mat color_img = imread("/home/kaai/chicago_ws/src/first_pkg/src/Kitti_File/image/001039.png",IMREAD_COLOR);
-  
-
   
 
   cv::Mat p(3,4,cv::DataType<double>::type);
   cv::Mat r(3,3,cv::DataType<double>::type);
   cv::Mat tr(3,4,cv::DataType<double>::type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /// 카메라 projection matrix (3 X 4)
+  /// camera projection matrix (3 X 4)
   p.at<double>(0,0) = 7.215377000000e+02;    p.at<double>(0,1) = 0.000000000000e+00;    p.at<double>(0,2) = 6.095593000000e+02;    p.at<double>(0,3) = 0.000000000000e+0;
   p.at<double>(1,0) = 0.00000000;    p.at<double>(1,1) = 7.215377000000e+02;    p.at<double>(1,2) = 1.728540000000e+02;    p.at<double>(1,3) = 0.000000000000e+0;  
   p.at<double>(2,0) = 0.00000000;    p.at<double>(2,1) = 0.00000000;    p.at<double>(2,2) = 1.00000000;    p.at<double>(2,3) = 0.000000000000e+0;  
@@ -159,19 +132,18 @@ int main(int argc, char** argv)
   float object_lidar_array[3]; // for getting 3D points for object
   float lane_lidar_array[3];   // for getting 3D points for lane
 
-  int object1_x = 407;
-  int object1_y = 297;
-  int lane1_x = 494;
-  int lane1_y = 297;
+  int object1_x = {OBJECT_POINT};
+  int object1_y = {OBJECT_POINT};;
+  int lane1_x = {LANE_POINT};;
+  int lane1_y = {LANE_POINT};;
 
-  // 단순히 x, y 픽셀 평행 이동 
   double offset_x = 0.00;
   double offset_y = 0.00;
   int number = 0;
-  int left_lane_all_x[] = {586 ,586 ,585 ,584 ,583 ,583 ,582 ,581 ,580 ,580 ,579 ,578 ,577 ,577 ,576 ,575 ,574 ,574 ,573 ,572 ,571 ,571 ,570 ,569 ,568 ,568 ,567 ,566 ,565 ,565 ,564 ,563 ,562 ,562 ,561 ,560 ,559 ,558 ,558 ,557 ,556 ,555 ,555 ,554 ,553 ,552 ,551 ,551 ,550 ,549 ,548 ,547 ,547 ,546 ,545 ,544 ,543 ,543 ,542 ,541 ,540 ,539 ,539 ,538 ,537 ,536 ,535 ,535 ,534 ,533 ,532 ,531 ,530 ,530 ,529 ,528 ,527 ,526 ,526 ,525 ,524 ,523 ,522 ,521 ,521 ,520 ,519 ,518 ,517 ,516 ,515 ,515 ,514 ,513 ,512 ,511 ,510 ,510 ,509 ,508 ,507 ,506 ,505 ,504 ,503 ,503 ,502 ,501 ,500 ,499 ,498 ,497 ,497 ,496 ,495 ,494 ,493 ,492 ,491 ,490 ,489 ,489 ,488 ,487 ,486 ,485 ,484 ,483 ,482 ,481 ,481 ,480 ,479 ,478 ,477 ,476 ,475 ,474 ,473 ,472 ,472 ,471 ,470 ,469 ,468 ,467 ,466 ,465 ,464 ,463 ,462 ,461 ,461 ,460 ,459 ,458 ,457 ,456 ,455 ,454 ,453 ,452 ,451 ,450 ,449 ,448 ,447 ,446 ,446 ,445 ,444 ,443 ,442 ,441 ,440 ,439 ,438 ,437 ,436 ,435 ,434 ,433 ,432 ,431 ,431 };
-  int left_lane_all_y[] = {191 ,192 ,193 ,194 ,195 ,196 ,197 ,198 ,199 ,200 ,201 ,202 ,203 ,204 ,205 ,206 ,207 ,208 ,209 ,210 ,211 ,212 ,213 ,214 ,215 ,216 ,217 ,218 ,219 ,220 ,221 ,222 ,223 ,224 ,225 ,226 ,227 ,228 ,229 ,230 ,231 ,232 ,233 ,234 ,235 ,236 ,237 ,238 ,239 ,240 ,241 ,242 ,243 ,244 ,245 ,246 ,247 ,248 ,249 ,250 ,251 ,252 ,253 ,254 ,255 ,256 ,257 ,258 ,259 ,260 ,261 ,262 ,263 ,264 ,265 ,266 ,267 ,268 ,269 ,270 ,271 ,272 ,273 ,274 ,275 ,276 ,277 ,278 ,279 ,280 ,281 ,282 ,283 ,284 ,285 ,286 ,287 ,288 ,289 ,290 ,291 ,292 ,293 ,294 ,295 ,296 ,297 ,298 ,299 ,300 ,301 ,302 ,303 ,304 ,305 ,306 ,307 ,308 ,309 ,310 ,311 ,312 ,313 ,314 ,315 ,316 ,317 ,318 ,319 ,320 ,321 ,322 ,323 ,324 ,325 ,326 ,327 ,328 ,329 ,330 ,331 ,332 ,333 ,334 ,335 ,336 ,337 ,338 ,339 ,340 ,341 ,342 ,343 ,344 ,345 ,346 ,347 ,348 ,349 ,350 ,351 ,352 ,353 ,354 ,355 ,356 ,357 ,358 ,359 ,360 ,361 ,362 ,363 ,364 ,365 ,366 ,367 ,368 ,369 ,370 ,371 ,372 ,373 ,374 ,374 };
-  int right_lane_all_x[] = {616 ,617 ,618 ,620 ,621 ,622 ,623 ,625 ,626 ,627 ,628 ,630 ,631 ,632 ,633 ,635 ,636 ,637 ,639 ,640 ,641 ,642 ,644 ,645 ,646 ,647 ,649 ,650 ,651 ,652 ,654 ,655 ,656 ,658 ,659 ,660 ,661 ,663 ,664 ,665 ,666 ,668 ,669 ,670 ,671 ,673 ,674 ,675 ,677 ,678 ,679 ,680 ,682 ,683 ,684 ,685 ,687 ,688 ,689 ,691 ,692 ,693 ,694 ,696 ,697 ,698 ,699 ,701 ,702 ,703 ,705 ,706 ,707 ,708 ,710 ,711 ,712 ,714 ,715 ,716 ,717 ,719 ,720 ,721 ,722 ,724 ,725 ,726 ,728 ,729 ,730 ,731 ,733 ,734 ,735 ,737 ,738 ,739 ,740 ,742 ,743 ,744 ,746 ,747 ,748 ,749 ,751 ,752 ,753 ,755 ,756 ,757 ,758 ,760 ,761 ,762 ,764 ,765 ,766 ,767 ,769 ,770 ,771 ,773 ,774 ,775 ,777 ,778 ,779 ,780 ,782 ,783 ,784 ,786 ,787 ,788 ,789 ,791 ,792 ,793 ,795 ,796 ,797 ,799 ,800 ,801 ,802 ,804 ,805 ,806 ,808 ,809 ,810 ,811 ,813 ,814 ,815 ,817 ,818 ,819 ,821 ,822 ,823 ,824 ,826 ,827 ,828 ,830 ,831 ,832 ,834 ,835 ,836 ,837 ,839 ,840 ,841 ,843 ,844 ,845 ,847 ,848 ,849 ,851 ,851 };
-  int right_lane_all_y[] = {191 ,192 ,193 ,194 ,195 ,196 ,197 ,198 ,199 ,200 ,201 ,202 ,203 ,204 ,205 ,206 ,207 ,208 ,209 ,210 ,211 ,212 ,213 ,214 ,215 ,216 ,217 ,218 ,219 ,220 ,221 ,222 ,223 ,224 ,225 ,226 ,227 ,228 ,229 ,230 ,231 ,232 ,233 ,234 ,235 ,236 ,237 ,238 ,239 ,240 ,241 ,242 ,243 ,244 ,245 ,246 ,247 ,248 ,249 ,250 ,251 ,252 ,253 ,254 ,255 ,256 ,257 ,258 ,259 ,260 ,261 ,262 ,263 ,264 ,265 ,266 ,267 ,268 ,269 ,270 ,271 ,272 ,273 ,274 ,275 ,276 ,277 ,278 ,279 ,280 ,281 ,282 ,283 ,284 ,285 ,286 ,287 ,288 ,289 ,290 ,291 ,292 ,293 ,294 ,295 ,296 ,297 ,298 ,299 ,300 ,301 ,302 ,303 ,304 ,305 ,306 ,307 ,308 ,309 ,310 ,311 ,312 ,313 ,314 ,315 ,316 ,317 ,318 ,319 ,320 ,321 ,322 ,323 ,324 ,325 ,326 ,327 ,328 ,329 ,330 ,331 ,332 ,333 ,334 ,335 ,336 ,337 ,338 ,339 ,340 ,341 ,342 ,343 ,344 ,345 ,346 ,347 ,348 ,349 ,350 ,351 ,352 ,353 ,354 ,355 ,356 ,357 ,358 ,359 ,360 ,361 ,362 ,363 ,364 ,365 ,366 ,367 ,368 ,369 ,370 ,371 ,372 ,373 ,374 ,374 };
+  int left_lane_all_x[] = {POINT};
+  int left_lane_all_y[] = {POINT};
+  int right_lane_all_x[] = {POINT};
+  int right_lane_all_y[] = {POINT};
 
   int len_lane_pixel = sizeof(left_lane_all_x)/ sizeof(left_lane_all_x[0]);
   cout << len_lane_pixel << endl;
@@ -200,7 +172,6 @@ int main(int argc, char** argv)
     
     pt_p.x = F.at<double>(0,0) / F.at<double>(0,2);
     pt_p.y = F.at<double>(1,0) / F.at<double>(0,2);
-    //std::cout << it->z <<std::endl;
 
     float val = it->x;
     float intensity = it-> x;
@@ -213,7 +184,7 @@ int main(int argc, char** argv)
 
     
     
-    // 좌측 Lane 우측 Lane 에 대해서 오버랩 부분 처리하기
+    // fine the crossing point between left lane and right lane
     for(int i = 0; i < len_lane_pixel; i+=1)
     {
       if((int(pt_o.x) == left_lane_all_x[i]) && (int(pt_o.y) == left_lane_all_y[i]))
@@ -272,7 +243,7 @@ int main(int argc, char** argv)
   
   
   ROS_INFO("count_right : %d",count_right);
-  // Left Point 정렬
+  // Sort Left Lane Point
   int minimum_L = 0;
   for(int i = 0; i < count_left -1 ; i++)
   {
@@ -297,7 +268,7 @@ int main(int argc, char** argv)
 
     //ROS_INFO("%f", left_lane_point_x[i]);
   }
-  // Right Point 정렬
+  // Sort Right Lane Point
   int minimum_R = 0;
   for(int i = 0; i < count_right -1 ; i++)
   {
@@ -322,8 +293,8 @@ int main(int argc, char** argv)
 
     //ROS_INFO("%f", right_lane_point_x[i]);
   }
-  // [다음 노드로 전달하기 위해서]
-  // 최소 거리를 구하기 위한 leftx 좌표 찍기
+  // [Pass to next NODE]
+  // Take leftx coordinates to find the minimum distance.
   cout << "leftx = [";
   for (int i = 0 ; i < count_left; i++)
   {
@@ -334,7 +305,7 @@ int main(int argc, char** argv)
     }
     cout << left_lane_point_x[i] << ",";
   }
-  // 최소 거리를 구하기 위한 lefty 좌표 찍기
+  // Take lefty coordinates to find the minimum distance.
   cout << "lefty = [";
   for (int i = 0 ; i < count_left; i++)
   {
@@ -345,7 +316,7 @@ int main(int argc, char** argv)
     }
     cout << left_lane_point_y[i] << ",";
   }
-  // 최소 거리를 구하기 위한 rightx 좌표 찍기
+  // Take rightx coordinates to find the minimum distance.
   cout << "rightx = [";
   for (int i = 0 ; i < count_right; i++)
   {
@@ -356,7 +327,7 @@ int main(int argc, char** argv)
     }
     cout << right_lane_point_x[i] << ",";
   }
-  // 최소 거리를 구하기 위한 righty 좌표 찍기
+  // Take righty coordinates to find the minimum distance.
   cout << "righty = [";
   for (int i = 0 ; i < count_right; i++)
   {
@@ -367,7 +338,7 @@ int main(int argc, char** argv)
     }
     cout << right_lane_point_y[i] << ",";
   }
-  // z 의 평균 값을 측정하는 코드
+  // get the average z value
   float average_height = 0;
   float sum = 0;
   for (int i = 0 ; i < count_left; i++)
@@ -387,30 +358,9 @@ int main(int argc, char** argv)
   cv::addWeighted(overlay_o, opacity, visImg_o, 1-opacity, 0, visImg_o);
 
   float distance = fabs(object_lidar_array[1] - lane_lidar_array[1]);
-  
-  //ROS_INFO("Distance is : %f ", distance);
-
-  //ROS_INFO("Object_lidar_array : %f, %f, %f", object_lidar_array[0], object_lidar_array[1], object_lidar_array[2]);
-  //ROS_INFO("Lane_lidar_array : %f, %f, %f", lane_lidar_array[0], lane_lidar_array[1], lane_lidar_array[2]);
-
-  //string string_distance = to_string(distance);
-  //string_distance.append("M");
-  //cv::Point Distance_Point;
-  //cv::Mat img(720,1280,CV_8UC3, cv::Scalar(255,255,255));
-
-  //Distance_Point.x = lane1_x - 40;
-  //Distance_Point.y = lane1_y - 10;
-  //cv::putText(visImg_p, string_distance, Distance_Point, 3, 0.6, CV_RGB(255, 255, 255));
-
-
+ 
 
   ros::Rate loop_rate(4);
-  /*
-  imshow("color_img_plane", visImg_p);
-  imshow("color_img_obstacle", visImg_o);
-  waitKey(0);
-  */
-
   sensor_msgs::ImagePtr img_msg_obs = cv_bridge::CvImage(std_msgs::Header(), "bgr8", visImg_o).toImageMsg();
   sensor_msgs::ImagePtr img_msg_plane = cv_bridge::CvImage(std_msgs::Header(), "bgr8", visImg_p).toImageMsg();
 
@@ -432,7 +382,7 @@ int main(int argc, char** argv)
     left_points.id = 0;
     left_line_strip.id = 1;
     left_line_list.id = 2;
-    left_points.type = visualization_msgs::Marker::POINTS;  // POINTS 를 SPHERE 로 바꿔보자 나중에
+    left_points.type = visualization_msgs::Marker::POINTS;
     left_line_strip.type = visualization_msgs::Marker::LINE_STRIP;
     left_line_list.type = visualization_msgs::Marker::LINE_LIST;
 
@@ -476,7 +426,7 @@ int main(int argc, char** argv)
     right_points.id = 0;
     right_line_strip.id = 1;
     right_line_list.id = 2;
-    right_points.type = visualization_msgs::Marker::POINTS;  // POINTS 를 SPHERE 로 바꿔보자 나중에
+    right_points.type = visualization_msgs::Marker::POINTS;
     right_line_strip.type = visualization_msgs::Marker::LINE_STRIP;
     right_line_list.type = visualization_msgs::Marker::LINE_LIST;
 
@@ -512,7 +462,6 @@ int main(int argc, char** argv)
       right_line_list.points.push_back(p_r);
   }
 
-
     marker_pub_left.publish(left_points);
     marker_pub_left.publish(left_line_strip);
     marker_pub_left.publish(left_line_list);
@@ -520,11 +469,7 @@ int main(int argc, char** argv)
     marker_pub_right.publish(right_line_strip);
     marker_pub_right.publish(right_line_list);
 
-    
-
-
-    //pub1.publish(msg);
-
+   
     ros::spinOnce ();
     loop_rate.sleep ();
 
