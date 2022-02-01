@@ -58,9 +58,7 @@ int main(int argc, char** argv)
   pcl::io::loadPCDFile<pcl::PointXYZI> ("/home/kaai/chicago_ws/src/first_pkg/src/KITTI/pcd/0000000200.pcd", *cloud);
   Mat color_img = imread("/home/kaai/chicago_ws/src/first_pkg/src/KITTI/image/0000000200.png",IMREAD_COLOR);
 
-  //000021.png  2090899988.pcd
-
-  //베스트 : 000030.png  2101599309.pcd
+  //Best : 000030.png  2101599309.pcd
   //RANSAC Section
   pcl::SACSegmentation<pcl::PointXYZI> seg;
   pcl::PointIndices::Ptr inliers(new pcl::PointIndices);
@@ -73,18 +71,18 @@ int main(int argc, char** argv)
   seg.setInputCloud(cloud);
   seg.segment(*inliers, *coefficients);
 
-  if(inliers->indices.size() == 0)            // 0일때, 우리는 우리 데이터에 적합한 모델을 찾지 못했다는 것을 의미한다.
+  if(inliers->indices.size() == 0)
   {
       std::cout << "Could not estimate a planar model for the given dataset." << std::endl;
   }
 
-  for(int index : inliers->indices)       //inliers가 가지는 모든 인덱스 값에 해당하는 cloud값을 planeCloud에 넣어준다.
+  for(int index : inliers->indices)
   {
       PCD_cloud_p->points.push_back(cloud->points[index]);
   }
 
   pcl::ExtractIndices<pcl::PointXYZI> extract;
-  extract.setInputCloud(cloud);       //이 reference cloud 에서 inliers에 해당하는 모든 포인트가 사라져서 obstCloud 만 남게된다.
+  extract.setInputCloud(cloud);
   extract.setIndices(inliers);
   extract.setNegative(true);
   extract.filter(*PCD_cloud_o);
@@ -92,39 +90,17 @@ int main(int argc, char** argv)
   sensor_msgs::PointCloud2 ROS_cloud_o;
   sensor_msgs::PointCloud2 ROS_cloud_p;
 
-/*
-  //toPCL을 하여 fromPCL을 사용하기위한 선언
-  pcl::PCLPointCloud2 * PCL_cloud_o(new pcl::PCLPointCloud2);
-  pcl::PCLPointCloud2 * PCL_cloud_p(new pcl::PCLPointCloud2);
-
-  pcl::toPCLPointCloud2(*PCD_cloud_o, *PCL_cloud_o);
-  pcl::toPCLPointCloud2(*PCD_cloud_p, *PCL_cloud_p);
-  pcl_conversions::fromPCL(*PCL_cloud_o, ROS_cloud_o);
-  pcl_conversions::fromPCL(*PCL_cloud_p, ROS_cloud_p);
-*/
   pcl::toROSMsg(*PCD_cloud_o, ROS_cloud_o);
   pcl::toROSMsg(*PCD_cloud_p, ROS_cloud_p);
   
   ROS_cloud_o.header.frame_id = "livox_frame";
-  ROS_cloud_p.header.frame_id = "livox_frame";
-
-
-
-
-  //img=cv::imread("/home/kaai/chicago_ws/src/first_pkg/src/Kitti_File/001013.png");
-
-  //sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", img).toImageMsg();
-
-  //Mat color_img = imread("/home/kaai/chicago_ws/src/first_pkg/src/Kitti_File/image/001039.png",IMREAD_COLOR);
-  
-
-  
+  ROS_cloud_p.header.frame_id = "livox_frame";  
 
   cv::Mat p(3,4,cv::DataType<double>::type);
   cv::Mat r(3,3,cv::DataType<double>::type);
   cv::Mat tr(3,4,cv::DataType<double>::type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /// 카메라 projection matrix (3 X 4)
+  /// Camera projection matrix (3 X 4)
   p.at<double>(0,0) = 7.215377000000e+02;    p.at<double>(0,1) = 0.000000000000e+00;    p.at<double>(0,2) = 6.095593000000e+02;    p.at<double>(0,3) = 0.000000000000e+0;
   p.at<double>(1,0) = 0.00000000;    p.at<double>(1,1) = 7.215377000000e+02;    p.at<double>(1,2) = 1.728540000000e+02;    p.at<double>(1,3) = 0.000000000000e+0;  
   p.at<double>(2,0) = 0.00000000;    p.at<double>(2,1) = 0.00000000;    p.at<double>(2,2) = 1.00000000;    p.at<double>(2,3) = 0.000000000000e+0;  
