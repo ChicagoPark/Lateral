@@ -42,7 +42,6 @@ print("img_w, img_h")
 print(img_w)
 print(img_h)
 print("img_w, img_h")
-# model_input = torch.from_numpy(frame)
 model_input = Image.fromarray(frame)
 model_input = transforms.Resize((288, 800))(model_input)
 model_input = transforms.ToTensor()(model_input)
@@ -106,15 +105,15 @@ for i in range(num_lane):
                 point_list_for_curve.append(ppp)
     point_list_for_curve = np.array(point_list_for_curve, np.int32)
     # cv2.polylines(frame2, [point_list_for_curve], False, (0, c_c, d_c), thickness=7)
-#print(left_lane_list)
-k = []  # plot 을 하기위해서 담는 좌측 레인의 x, y 좌표
+
+k = []  # x and y coordinates of the left lane to plot.
 left_lane_all_x = []
 left_lane_all_y = []
-l = []  # plot 을 하기위해서 담는 우측 레인의 x, y 좌표
+l = []  # x and y coordinates of the right lane to plot.
 right_lane_all_x = []
 right_lane_all_y = []
 
-# 2차 함수 구하고, 그래프를 그리는 코드
+# Find a quadratic function and draw a graph.
 if len(leftx) != 0 and len(lefty) != 0 and len(rightx) != 0 and len(righty) != 0:
     left_fit = np.polyfit(lefty, leftx, 2)  # to calculate coefficient
     right_fit = np.polyfit(righty, rightx, 2)
@@ -122,7 +121,6 @@ if len(leftx) != 0 and len(lefty) != 0 and len(rightx) != 0 and len(righty) != 0
     print(f'Left Lane : {left_fit[0]} {left_fit[1]} {left_fit[2]}')
     print(f'Right Lane : {right_fit[0]} {right_fit[1]} {right_fit[2]}')
 
-    # define coefficient of
     if left_fit[1] != 0 and left_fit[2] != 0 and right_fit[0] != 0 and right_fit[1] != 0:
         L = left_fit
         R = right_fit
@@ -150,17 +148,14 @@ if len(leftx) != 0 and len(lefty) != 0 and len(rightx) != 0 and len(righty) != 0
     # ploty = np.linspace(0, frame.shape[0] - 1, frame.shape[0])
 
     ploty = np.linspace(contact_y, frame.shape[0] - 1,
-                        frame.shape[0] - contact_y)  # y좌표에 대해서 상위 1/3 지점 부터 최하단 까지 그래프를 그리기위한 코드
+                        frame.shape[0] - contact_y)
 
-    # ploty = np.linspace(int(frame2.shape[0] * (6 / 11)), frame2.shape[0] - 1,
-    #                    int(frame2.shape[0] * (5 / 11)))  # y좌표에 대해서 상위 1/3 지점 부터 최하단 까지 그래프를 그리기위한 코드
-
-    left_fitx = left_fit[0] * ploty ** 2 + left_fit[1] * ploty + left_fit[2]  # 방정식에 대한 x 값을 얻어오기 위한 코드
+    left_fitx = left_fit[0] * ploty ** 2 + left_fit[1] * ploty + left_fit[2]  # get the x coordinate from equation
 
     right_fitx = right_fit[0] * ploty ** 2 + right_fit[1] * ploty + right_fit[2]
 
     for ii, x in enumerate(left_fitx):
-        q = (int(x), int(ii + contact_y))  # 상위 1/3 지점부터 그래프를 그리기 시작하므로 인덱스에 해당하는 ii 에 그만큼 추가해준다.
+        q = (int(x), int(ii + contact_y))
         if (x >= 0):
             k.append(q)
             left_lane_all_x.append(q[0])
@@ -177,10 +172,6 @@ for i in range(0, len(left_lane_all_x)):
     if i == len(left_lane_all_x) - 1:
         print(left_lane_all_x[i],'};')
         break
-#print(len(left_lane_all_x))
-#print(len(left_lane_all_y))
-#print(len(right_lane_all_x))
-#print(len(right_lane_all_x))
 
 print('int left_lane_all_y[] = {', end='')
 for i in range(0, len(left_lane_all_y)):
@@ -204,18 +195,13 @@ for i in range(0, len(right_lane_all_y)):
         print(right_lane_all_y[i],'};')
         break
 
+k = np.array(k, np.int32)
 
-#print(f'left_lane_all_y = {left_lane_all_y}')
+cv2.polylines(image_original, [k], False, (104, 255, 0), thickness=7) # Left lane: fluorescent green color
 
-#print(f'right_lane_all_x = {right_lane_all_x}')
-#print(f'right_lane_all_y = {right_lane_all_y[:]}')
-k = np.array(k, np.int32)  # polylines 함수에 좌표는 np.array 형태를 유지해줘야하므로 추가한 코드이다.
-# cv2.polylines(frame, [k], False, (235, 206, 135), thickness=7)  # 좌측 레인 : sky blue color
-cv2.polylines(image_original, [k], False, (104, 255, 0), thickness=7)  # 좌측 레인 : fluorescent green color
+l = np.array(l, np.int32).
 
-l = np.array(l, np.int32)  # polylines 함수에 좌표는 np.array 형태를 유지해줘야하므로 추가한 코드이다.
-# cv2.polylines(frame, [l], False, (160, 114, 0), thickness=7)  # 우측 레인 : deep blue color
-cv2.polylines(image_original, [l], False, (19, 244, 239), thickness=7)  # 우측 레인 : fluorescent blue color
+cv2.polylines(image_original, [l], False, (19, 244, 239), thickness=7) # Right lane: fluorescent blue color
 
 cv2.imshow("YOUNGIL", image_original)
 cv2.imwrite("target.jpg", frame)
