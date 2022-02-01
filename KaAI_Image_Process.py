@@ -123,7 +123,6 @@ if len(leftx) != 0 and len(lefty) != 0 and len(rightx) != 0 and len(righty) != 0
     print(f'Left Lane : {left_fit[0]} {left_fit[1]} {left_fit[2]}')
     print(f'Right Lane : {right_fit[0]} {right_fit[1]} {right_fit[2]}')
 
-    # define coefficient of
     if left_fit[1] != 0 and left_fit[2] != 0 and right_fit[0] != 0 and right_fit[1] != 0:
         L = left_fit
         R = right_fit
