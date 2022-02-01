@@ -57,7 +57,7 @@ int main(int argc, char** argv)
   cv::Mat r(3,3,cv::DataType<double>::type);
   cv::Mat tr(3,4,cv::DataType<double>::type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /// 카메라 projection matrix (3 X 4)
+  /// Camera projection matrix (3 X 4)
   p.at<double>(0,0) = 7.215377000000e+02;    p.at<double>(0,1) = 0.000000000000e+00;    p.at<double>(0,2) = 6.095593000000e+02;    p.at<double>(0,3) = 0.000000000000e+0;
   p.at<double>(1,0) = 0.00000000;    p.at<double>(1,1) = 7.215377000000e+02;    p.at<double>(1,2) = 1.728540000000e+02;    p.at<double>(1,3) = 0.000000000000e+0;  
   p.at<double>(2,0) = 0.00000000;    p.at<double>(2,1) = 0.00000000;    p.at<double>(2,2) = 1.00000000;    p.at<double>(2,3) = 0.000000000000e+0;  
