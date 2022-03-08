@@ -34,6 +34,11 @@
 <img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821453-0446fe68-bac1-4a4c-b7a4-f920bce0f7bd.png">
 
 
+## [7] Dataset preparation
+`Using KITTI Dataset to label 3D point on lanes.`
+
+
+
 ##  CODE Explanation
 
 ### 1️⃣KaAI_Image_Process.py
