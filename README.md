@@ -58,6 +58,12 @@ Get quadratic equations on 3D (output: coefficient of quadratic equations)
 Visualize overlapped lanes (output: visualizing RVIZ)
 ```
 
+-------
+## Paperwork Ideabank
+1. save lane detection output into the text file for csv file
+2. get the '1.' value through method
+-------
+
 <!--
 ### [3-1]: Projection based Point Cloud on image
 
