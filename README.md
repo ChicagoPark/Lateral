@@ -58,6 +58,12 @@ Get quadratic equations on 3D (output: coefficient of quadratic equations)
 Visualize overlapped lanes (output: visualizing RVIZ)
 ```
 
+### etc: label_plotting.py
+```python
+Visualize label data
+```
+
+
 -------
 ## Paperwork Ideabank
 1. save lane detection output into the text file for csv file
@@ -67,7 +73,7 @@ Visualize overlapped lanes (output: visualizing RVIZ)
 -------
 ## Roles
 Bounding Box Visualization: /home/kaai/chicago_ws/src/kitti_visualizer/launch/object_visualizer.launch
-Label Points Visualization: /home/kaai/chicago_ws/src/first_pkg/src/Class_label_plotting.py
+Label Points Visualization: /home/kaai/chicago_ws/src/first_pkg/src/label_plotting.py
 
 
 -------
