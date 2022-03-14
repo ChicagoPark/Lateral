@@ -64,6 +64,15 @@ Visualize overlapped lanes (output: visualizing RVIZ)
 2. get the '1.' value through method
 -------
 
+-------
+## Roles
+Bounding Box Visualization: /home/kaai/chicago_ws/src/kitti_visualizer/launch/object_visualizer.launch
+Label Points Visualization: /home/kaai/chicago_ws/src/first_pkg/src/Class_label_plotting.py
+
+
+-------
+
+
 <!--
 ### [3-1]: Projection based Point Cloud on image
 
