@@ -80,6 +80,40 @@ Label Points Visualization: /home/kaai/chicago_ws/src/first_pkg/src/label_plotti
 
 
 <!--
+Code Movement
+1️⃣  이미지 상 Lane Detection , 점 추출
+
+~/lee_ws/src/AB3DMOT $ python KaAI_Image_Process.py
+
+출력하는 것 : 레인에 대한 픽셀
+
+2️⃣  Projection 및 포인트 매칭작업
+
+작업공간
+
+/home/kaai/chicago_ws/src/first_pkg/src/vehicle_lateral_positioning
+
+~/chicago_ws $ rosrun first_pkg KaAI_KITTI_Point_Processing
+
+출력하는 것 : Lane 에 대해 매칭하여 얻은 점
+
+3️⃣  3D 상에 찍힌 점에 대해 다시 방정식을 도출하기
+
+3D Point Equation
+
+~/lee_ws/src/AB3DMOT$ python 3D_Point_Equation.py
+
+4️⃣  3D 상에 해당좌표에 대해 Marker 를 명시해주기
+
+rosrun first_pkg
+pcd_with_intensity --m=bin2pcd --b=/home/kaai/chicago_ws/src/first_pkg/src/KITTI/bin/
+--p=/home/kaai/chicago_ws/src/first_pkg/src/KITTI/pcd/
+
+
+
+
+
+
 ### [3-1]: Projection based Point Cloud on image
 
 https://github.com/ChicagoPark/LiDAR_Projection
