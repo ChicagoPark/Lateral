@@ -120,6 +120,12 @@ l = []  # plot 을 하기위해서 담는 우측 레인의 x, y 좌표
 right_lane_all_x = []
 right_lane_all_y = []
 
+#label the list for CSV file
+#left_lane_all_x.append("left_lane_all_x")
+#left_lane_all_y.append("left_lane_all_y")
+#right_lane_all_x.append("right_lane_all_x")
+#right_lane_all_y.append("right_lane_all_y")
+f = open('/home/kaai/chicago_ws/src/CSV_Communication/lane.csv', 'w', newline="")
 # 2차 함수 구하고, 그래프를 그리는 코드
 if len(leftx) != 0 and len(lefty) != 0 and len(rightx) != 0 and len(righty) != 0:
     left_fit = np.polyfit(lefty, leftx, 2)  # to calculate coefficient
@@ -129,12 +135,11 @@ if len(leftx) != 0 and len(lefty) != 0 and len(rightx) != 0 and len(righty) != 0
     print(f'Right Lane : {right_fit[0]} {right_fit[1]} {right_fit[2]}')
     
     
-    f = open('/home/kaai/chicago_ws/src/CSV_Communication/lane.csv', 'w', newline="")
     wr = csv.writer(f)
     wr.writerow(["Left_Lane_Coefficient", left_fit[0], left_fit[1], left_fit[2]])
     wr.writerow(["Right_Lane_Coefficient", right_fit[0], right_fit[1], right_fit[2]])
 
-    f.close()
+    #f.close()
 
     # define coefficient of
     if left_fit[1] != 0 and left_fit[2] != 0 and right_fit[0] != 0 and right_fit[1] != 0:
@@ -189,16 +194,14 @@ if len(leftx) != 0 and len(lefty) != 0 and len(rightx) != 0 and len(righty) != 0
 #wr.writerow(["Left_Lane_Coefficient", str(left_fit[0]), str(left_fit[1]), str(left_fit[2])])
 #wr.writerow(["Right_Lane_Coefficient", str(right_fit[0]), str(right_fit[1]), str(right_fit[2])])
 
-f = open('/home/kaai/chicago_ws/src/CSV_Communication/lane.csv')
-r = csv.reader(f)
-row0 = next(r)
-row0.append('left_lane_all_x')
+#f = open('/home/kaai/chicago_ws/src/CSV_Communication/lane.csv')
+
 
 print('int left_lane_all_x[] = {', end='')
 for i in range(0, len(left_lane_all_x)):
     print(left_lane_all_x[i], ',', end='')
 
-    row0.append(left_lane_all_x[i])
+    #row0.append(left_lane_all_x[i])
 
     if i == len(left_lane_all_x) - 1:
         print(left_lane_all_x[i],'};')
@@ -209,6 +212,11 @@ for i in range(0, len(left_lane_all_x)):
     if i == len(left_lane_all_x) - 1:
         print(left_lane_all_x[i],'};')
         break
+
+wr.writerow(left_lane_all_x)
+wr.writerow(left_lane_all_y)
+wr.writerow(right_lane_all_x)
+wr.writerow(right_lane_all_y)
 
 
 f.close()
