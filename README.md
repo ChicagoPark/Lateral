@@ -78,6 +78,66 @@ Label Points Visualization: /home/kaai/chicago_ws/src/first_pkg/src/label_plotti
 
 -------
 
+```python
+import numpy as np
+import shapely.geometry as geom
+from shapely.geometry import Point
+import matplotlib.pyplot as plt
+
+class NearestPoint(object):
+    def __init__(self, line, ax):
+        self.line = line
+        self.ax = ax
+        ax.figure.canvas.mpl_connect('button_press_event', self)
+
+    def __call__(self, x_value, y_value):
+        #x, y = event.xdata, event.ydata
+        x, y = x_value, y_value
+        point = geom.Point(x, y)
+        distance = self.line.distance(point)
+        self.draw_segment(point)
+        print('Distance to line:', distance)
+
+    def draw_segment(self, point):
+        point_on_line = line.interpolate(line.project(point))
+        self.ax.plot([point.x, point_on_line.x], [point.y, point_on_line.y], 
+                     color='red', marker='o', scalex=False, scaley=False)
+        fig.canvas.draw()
+
+if __name__ == '__main__':
+    coords = np.loadtxt('left_points.txt')
+    r_coords = np.loadtxt('right_points.txt')
+    
+    # define object locations
+    object_list = [[5.5, 10.2],[-16,3]]
+    point_list = []
+    
+    # get the Point objects corresponding to vehicle
+    for i in object_list:
+        point_list.append(Point(i[0], i[1]))
+        
+    line = geom.LineString(coords)
+   
+    # Plotting Section
+    fig, ax = plt.subplots()
+    ax.plot(*coords.T)
+    ax.plot(*r_coords.T)
+    ax.axis('equal')
+    # Set the frame
+    ax.set_xlim(-30, 30)
+    ax.set_ylim(-30, 30)
+    
+    distance_class = NearestPoint(line, ax)
+    
+    for i in range(len(point_list)):
+        distance_class.draw_segment(point_list[i])
+    
+    
+    plt.show()
+```
+
+
+
 
 <!--
 Code Movement
