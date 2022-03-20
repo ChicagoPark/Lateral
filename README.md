@@ -77,7 +77,12 @@ Label Points Visualization: /home/kaai/chicago_ws/src/first_pkg/src/label_plotti
 
 
 -------
-
+## Minimum Distance Code
+```bash
+[reference]
+[1] https://stackoverflow.com/questions/19101864/find-minimum-distance-from-point-to-complicated-curve
+[2] https://shapely.readthedocs.io/en/stable/manual.html#points
+```
 ```python
 import numpy as np
 import shapely.geometry as geom
