@@ -41,11 +41,11 @@
 
 ##  CODE Explanation
 
-### 1️⃣KaAI_Image_Process.py
+### 1️⃣1_Lane_2D.py
 ```python
 Detect the lanes on the image. (output: Pixel locations of lanes)
 ```
-### 2️⃣KaAI_Point_Processing.py
+### 2️⃣2_Matching.py
 ```python
 Match the corresponding point cloud with lane pixels (output: Coordinates of matched 3D points)
 ```
