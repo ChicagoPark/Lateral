@@ -49,7 +49,8 @@ if __name__ == "__main__":
     label_list = []
 
     # this line is for getting line from the txt file
-    label_file = '/home/kaai/chicago_ws/src/kitti_visualizer/object/training/label_2/000007.txt'
+    #label_file = '/home/kaai/chicago_ws/src/kitti_visualizer/object/training/label_2/000007.txt'
+    label_file = '/home/kaai/chicago_ws/src/kitti_visualizer/object/training/label_2/000192.txt'
     with open(label_file, 'r') as f:
         lines = f.readlines()
         for line in lines:
@@ -96,9 +97,9 @@ if __name__ == "__main__":
         robotMarker.scale.y = .5
         robotMarker.scale.z = .5
 
-        robotMarker.color.r = 10.0
-        robotMarker.color.g = 10.0
-        robotMarker.color.b = 10.0
+        robotMarker.color.r = 1.0
+        robotMarker.color.g = 0.2
+        robotMarker.color.b = 1.0
         robotMarker.color.a = 1.0
 
         for i in label_list:
