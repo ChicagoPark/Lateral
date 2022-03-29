@@ -11,8 +11,8 @@ import torch
 import scipy.special, tqdm
 import numpy as np
 import torchvision.transforms as transforms
-from data1.dataset import LaneTestDataset
-from data1.constant import culane_row_anchor, tusimple_row_anchor, youngil_row_anchor
+from data.dataset import LaneTestDataset
+from data.constant import culane_row_anchor, tusimple_row_anchor, youngil_row_anchor
 from PIL import Image
 import argparse
 import csv
@@ -33,7 +33,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else "cpu")
 cls_num_per_lane = 18
 net = parsingNet(pretrained=False, backbone='18', cls_dim=(201, cls_num_per_lane, 4),
                  use_aux=False).cuda()  # we dont need auxiliary segmentation in testing
-state_dict = torch.load('/home/kaai/lee_ws/src/AB3DMOT/configs/culane_18.pth',
+state_dict = torch.load('/home/kaai/chicago_ws/src/first_pkg/Distance_Project/weight/culane_18.pth',
                         map_location='cpu')['model']
 compatible_state_dict = {}
 for k, v in state_dict.items():
