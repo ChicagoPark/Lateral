@@ -144,8 +144,8 @@ if __name__ == "__main__":
     result = distance_class.draw_segment(object_list)
     
     # this line is for getting line from the txt file
-    #label_file = '/home/kaai/dataset/training/label_2/000007.txt'
-    label_file = '/home/kaai/dataset/training/label_2/000192.txt'
+    label_file = '/home/kaai/dataset/training/label_2/000007.txt'
+    #label_file = '/home/kaai/dataset/training/label_2/000192.txt'
     with open(label_file, 'r') as f:
         lines = f.readlines()
         for line in lines:
