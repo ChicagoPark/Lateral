@@ -49,11 +49,11 @@ Detect the lanes on the image. (output: Pixel locations of lanes)
 ```python
 Match the corresponding point cloud with lane pixels (output: Coordinates of matched 3D points)
 ```
-### 3️⃣3D_Point_Equation.py
+### 3️⃣3_Lane_Equation.py
 ```python
 Get quadratic equations on 3D (output: coefficient of quadratic equations)
 ```
-### 4️⃣3D_Lane_Marker.cpp
+### 4️⃣4_Marking.py
 ```python
 Visualize overlapped lanes (output: visualizing RVIZ)
 ```
