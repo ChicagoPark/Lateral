@@ -6,9 +6,9 @@ import csv
 
 sn = int(sys.argv[1]) if len(sys.argv)>1 else 7 #default 0-7517
 name = '%06d'%sn # 6 digit zeropadding
-img = f'/home/kaai/dataset/training/image_2/{name}.png'
-binary = f'/home/kaai/dataset/training/velodyne1/{name}.bin'
-with open(f'/home/kaai/dataset/training/calib/{name}.txt','r') as f:
+img = f'../../../../dataset/training/image_2/{name}.png'
+binary = f'../../../../dataset/training/velodyne/{name}.bin'
+with open(f'../../../../dataset/training/calib/{name}.txt','r') as f:
     calib = f.readlines()
 
 # read the lane pixel from 1_Lane_2D.py
@@ -21,7 +21,7 @@ line 3rd: leftlaneY
 line 4th: rightlaneX
 line 5th: rightlaneY
 '''
-lane_csv = open("/home/kaai/chicago_ws/src/CSV_Communication/1_lane.csv")
+lane_csv = open("../../CSV_Communication/1_lane.csv")
 csvreader = csv.reader(lane_csv)
 rows = []
 for row in csvreader:
@@ -131,12 +131,12 @@ print(leftlane3D)
 print(rightlane3D)
 
 #make left lane txt file
-with open('/home/kaai/chicago_ws/src/CSV_Communication/2_matched_left.txt', 'w') as left_lane_file:
+with open('../../CSV_Communication/2_matched_left.txt', 'w') as left_lane_file:
     for i in range(len(leftlane3D)):
         left_lane_file.write(f"{leftlane3D[i][1]} {leftlane3D[i][0]}\n")
 
 #make right lane txt file
-with open('/home/kaai/chicago_ws/src/CSV_Communication/2_matched_right.txt', 'w') as right_lane_file:
+with open('../../CSV_Communication/2_matched_right.txt', 'w') as right_lane_file:
     for i in range(len(rightlane3D)):
         right_lane_file.write(f"{rightlane3D[i][1]} {rightlane3D[i][0]}\n")
 
@@ -200,5 +200,5 @@ cam = np.delete(cam,np.where(outlier),axis=1)
 u,v,z = cam
 plt.scatter([u],[v],c=[z],cmap='rainbow_r',alpha=0.5,s=2)
 plt.title(name)
-plt.savefig(f'/home/kaai/dataset/projected_output/{name}.png',bbox_inches='tight')
+plt.savefig(f'../../../../dataset/projected_output/{name}.png',bbox_inches='tight')
 plt.show()

@@ -20,7 +20,7 @@ import sys
 
 sn = int(sys.argv[1]) if len(sys.argv)>1 else 7 #default 0-7517
 name = '%06d'%sn # 6 digit zeropadding
-input_dir = f'/home/kaai/dataset/training/image_2/{name}.png'
+input_dir = f'../../../../dataset/training/image_2/{name}.png'
 
 
 # get the image directory
@@ -37,7 +37,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else "cpu")
 cls_num_per_lane = 18
 net = parsingNet(pretrained=False, backbone='18', cls_dim=(201, cls_num_per_lane, 4),use_aux=False).cuda()  # we dont need auxiliary segmentation in testing
 #net = parsingNet(size= (pretrained=False, backbone='18', cls_dim=(37, 10, 4),use_aux=False).cuda()  # we dont need auxiliary segmentation in testing
-state_dict = torch.load('/home/kaai/chicago_ws/src/first_pkg/Distance_Project/weight/culane_18.pth', map_location='cpu')['model']
+state_dict = torch.load('../models/culane_18.pth', map_location='cpu')['model']
 #state_dict = torch.load('/home/kaai/Ultrafast-Lane-Detection-Inference-Pytorch-/models/tusimple_18.pth', map_location='cpu')['model']
 
 compatible_state_dict = {}
@@ -138,7 +138,7 @@ right_lane_all_y = []
 #left_lane_all_y.append("left_lane_all_y")
 #right_lane_all_x.append("right_lane_all_x")
 #right_lane_all_y.append("right_lane_all_y")
-f = open('/home/kaai/chicago_ws/src/CSV_Communication/lane.csv', 'w', newline="")
+f = open('../../CSV_Communication/lane.csv', 'w', newline="")
 
 print(len(leftx))
 print(len(lefty))

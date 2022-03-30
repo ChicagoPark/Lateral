@@ -10,8 +10,8 @@ use_gpu = False
 #image_path = "input.jpg"
 sn = int(sys.argv[1]) if len(sys.argv)>1 else 7 #default 0-7517
 name = '%06d'%sn # 6 digit zeropadding
-image_path = f'/home/kaai/dataset/training/image_2/{name}.png'
-csv_path = "/home/kaai/chicago_ws/src/CSV_Communication/1_lane.csv"
+image_path = f'../../../../dataset/training/image_2/{name}.png'
+csv_path = "../../CSV_Communication/1_lane.csv"
 
 print(model_type)
 #print(model_type.griding_num)

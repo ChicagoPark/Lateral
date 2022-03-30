@@ -98,9 +98,9 @@ if __name__ == "__main__":
 
     height = -1.50115
     
-    l_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/left_lane.txt')
-    r_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/right_lane.txt')
-    o_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/object.txt')
+    l_coords = np.loadtxt('../../CSV_Communication/left_lane.txt')
+    r_coords = np.loadtxt('../../CSV_Communication/right_lane.txt')
+    o_coords = np.loadtxt('../../CSV_Communication/object.txt')
     # get the lane list
     left_lane_equat_point_x = []
     left_lane_equat_point_y = []
@@ -144,8 +144,8 @@ if __name__ == "__main__":
     result = distance_class.draw_segment(object_list)
     
     # this line is for getting line from the txt file
-    label_file = '/home/kaai/dataset/training/label_2/000007.txt'
-    #label_file = '/home/kaai/dataset/training/label_2/000192.txt'
+    label_file = '../../../../dataset/training/label_2/000007.txt'
+    #label_file = '../../../../dataset/training/label_2/000192.txt'
     with open(label_file, 'r') as f:
         lines = f.readlines()
         for line in lines:
