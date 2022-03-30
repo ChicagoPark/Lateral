@@ -21,7 +21,7 @@ line 3rd: leftlaneY
 line 4th: rightlaneX
 line 5th: rightlaneY
 '''
-lane_csv = open("/home/kaai/chicago_ws/src/CSV_Communication/lane.csv")
+lane_csv = open("/home/kaai/chicago_ws/src/CSV_Communication/1_lane.csv")
 csvreader = csv.reader(lane_csv)
 rows = []
 for row in csvreader:
@@ -124,11 +124,21 @@ for i in range(len(new_veloList)):
                     rightlane3Dy.append(veloList[1])
                     rightlane3Dz.append(veloList[2])
         '''
-print(leftlane3D)
-print(rightlane3D)
+
 leftlane3D = sorted(leftlane3D)
 rightlane3D = sorted(rightlane3D)
+print(leftlane3D)
+print(rightlane3D)
 
+#make left lane txt file
+with open('/home/kaai/chicago_ws/src/CSV_Communication/2_matched_left.txt', 'w') as left_lane_file:
+    for i in range(len(leftlane3D)):
+        left_lane_file.write(f"{leftlane3D[i][1]} {leftlane3D[i][0]}\n")
+
+#make right lane txt file
+with open('/home/kaai/chicago_ws/src/CSV_Communication/2_matched_right.txt', 'w') as right_lane_file:
+    for i in range(len(rightlane3D)):
+        right_lane_file.write(f"{rightlane3D[i][1]} {rightlane3D[i][0]}\n")
 
 
 '''
@@ -176,8 +186,6 @@ cam[:2] /= cam[2,:]
 plt.figure(figsize=(12,5),dpi=96,tight_layout=True)
 png = mpimg.imread(img)
 IMG_H,IMG_W,_ = png.shape
-
-print(IMG_W, IMG_H)
 
 # restrict canvas in range
 plt.axis([0,IMG_W,IMG_H,0])
