@@ -13,7 +13,7 @@ name = '%06d'%sn # 6 digit zeropadding
 image_path = f'../../../../dataset/training/image_2/{name}.png'
 csv_path = "../../CSV_Communication/1_lane.csv"
 
-print(model_type)
+#print(model_type)
 #print(model_type.griding_num)
 #print(model_type.cls_num_per_lane)
 
@@ -22,7 +22,7 @@ lane_detector = UltrafastLaneDetector(model_path, model_type, use_gpu)
 
 # Read RGB images
 img = cv2.imread(image_path, cv2.IMREAD_COLOR)
-print(img.shape)
+#print(img.shape)
 
 # Detect the lanes
 output_img = lane_detector.detect_lanes(img, draw_points=True, csv_path= csv_path)
