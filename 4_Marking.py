@@ -4,11 +4,16 @@ import torch, os, cv2
 import numpy as np
 from std_msgs.msg import String
 from geometry_msgs.msg import PointStamped
-from visualization_msgs.msg import Marker
+from visualization_msgs.msg import Marker, MarkerArray
 import shapely.geometry as geom
 from shapely.geometry import Point
 import matplotlib.pyplot as plt
 from std_msgs.msg import ColorRGBA
+import sys
+
+sn = int(sys.argv[1]) if len(sys.argv)>1 else 7 #default 7
+name = '%06d'%sn # 6 digit zeropadding
+label_path = f'../../../../dataset/training/label_2/{name}.txt'
 
 class NearestPoint(object):
     def __init__(self, left_line, right_line, ax):
@@ -31,6 +36,7 @@ class NearestPoint(object):
         for i in object_list:
             if i[0] <= 0:
                 left_point_list.append(Point(i[0], i[1]))
+                print(Point(i[0],i[1]))
             else:
                 right_point_list.append(Point(i[0], i[1]))
         # Draw the lateral lane about the left objects
@@ -40,7 +46,7 @@ class NearestPoint(object):
                      color='red', marker='o', scalex=False, scaley=False)
             fig.canvas.draw()
             # get the distance in meter unit
-            resultList = resultList + [point.y, -point.x] + self.__call__(point, 'left', point_on_line)
+            resultList.append([point.y, -point.x] + self.__call__(point, 'left', point_on_line))
         # Draw the lateral lane about the right objects
         for point in right_point_list:
             point_on_line = self.right_line.interpolate(self.right_line.project(point))
@@ -48,7 +54,7 @@ class NearestPoint(object):
                      color='red', marker='o', scalex=False, scaley=False)
             fig.canvas.draw()
             # get the distance in meter unit
-            resultList = resultList + [point.y, -point.x] + self.__call__(point, 'right', point_on_line)
+            resultList.append(resultList + [point.y, -point.x] + self.__call__(point, 'right', point_on_line))
         
         # result list label: [object_x, object_y, lane_x, lane_y, distance_value]
         return resultList
@@ -82,7 +88,7 @@ if __name__ == "__main__":
     markerPub_left = rospy.Publisher('left_eq', Marker, queue_size=10)
     markerPub_right = rospy.Publisher('right_eq', Marker, queue_size=10)
     markerPub_answer = rospy.Publisher('answer', Marker, queue_size=10)
-    markerPub_text = rospy.Publisher('text', Marker, queue_size=10)
+    markerPub_text = rospy.Publisher('text', MarkerArray, queue_size=10)
 
     rospy.init_node('plotting_node', anonymous=True)
 
@@ -137,16 +143,21 @@ if __name__ == "__main__":
     ax.axis('equal')
     # Set the frame
     ax.set_xlim(-10, 10)
-    ax.set_ylim(-1, 45)
+    ax.set_ylim(-1, object_list[-1][1]+ 10)
     
     # Make the class
     distance_class = NearestPoint(left_line, right_line, ax)
     result = distance_class.draw_segment(object_list)
+
+    print(object_list)
+    print(result)
+
     
+
+
     # this line is for getting line from the txt file
-    label_file = '../../../../dataset/training/label_2/000007.txt'
-    #label_file = '../../../../dataset/training/label_2/000192.txt'
-    with open(label_file, 'r') as f:
+    #label_file = '../../../../dataset/training/label_2/000007.txt'
+    with open(label_path, 'r') as f:
         lines = f.readlines()
         for line in lines:
             label = line.strip().split(' ')
@@ -167,9 +178,11 @@ if __name__ == "__main__":
             level_str = None
             
             # Filter the line which has lane labels
+            #print(len(label))
             print(len(label))
             if len(label) != 15:
                 label_list.append(label)
+                print(label)
         
         # Define the marker of left lane
         left_points = left_line_strip = left_line_list = Marker()
@@ -263,7 +276,7 @@ if __name__ == "__main__":
             right_points.points.append(right)
             right_line_strip.points.append(right)
 
-            print(right)
+            #print(right)
 
             # The line list needs two points for each line
             right_line_list.points.append(right)
@@ -307,8 +320,12 @@ if __name__ == "__main__":
         answer_line_list.color.r = 2.0
         answer_line_list.color.g = 0.0
         answer_line_list.color.a = 1.0
+        
 
         # Marker for text
+        rvizTextarray = MarkerArray()
+        from geometry_msgs.msg import Point
+        '''
         rviz_text = Marker()
         rviz_text.header.frame_id = "livox_frame"
         rviz_text.ns = "plotting"
@@ -316,30 +333,44 @@ if __name__ == "__main__":
         rviz_text.type = Marker.TEXT_VIEW_FACING
         rviz_text.color = ColorRGBA(1,1,1,1)
         rviz_text.scale.z = 1.2
-        rviz_text.text = str(round(result[4],2)) + ' M'
+        #rviz_text.text = str(round(result[4],2)) + ' M'
         #from geometry_msgs.msg import Point
         #txt_location = Point(result[2], result[3], height+1.0)
         ##rviz_text.pose.position = Point(2, 1, 0)
         #rviz_text.pose.position = txt_location
-        rviz_text.pose.position = Point(result[2], result[3], height+2.0)
-
+        
+        #rviz_text.pose.position = Point(result[2], result[3], height+2.0)
+        '''
         # result list label: [object_x, object_y, lane_x, lane_y, distance_value]        
         #g = open("right_lane.txt", "w")
-        for i in range(int(len(result)/5)):
-            answer_lane = Point(result[5*(i)+2], result[5*i+3], height)
-            answer_obj =  Point(result[5*(i)], result[5*i+1], height)
-            distance_value = result[5*i+4]
+        for ii,i in enumerate (result):
+            answer_lane = Point(i[2], i[3], height)
+            answer_obj =  Point(i[0], i[1], height)
+            distance_value = i[4]
             answer_points.points.append(answer_lane)
             answer_line_strip.points.append(answer_lane)
             answer_points.points.append(answer_obj)
             answer_line_strip.points.append(answer_obj)
 
-
             # The line list needs two points for each line
             answer_line_list.points.append(answer_lane)
-            answer_lane = Point(result[5*(i)+2], result[5*i+3], height)
-            answer_obj =  Point(result[5*(i)], result[5*i+1], height)
+            answer_lane = Point(i[2], i[3], height)
+            answer_obj =  Point(i[0], i[1], height)
             answer_line_list.points.append(answer_lane)
+            
+            rviz_text = Marker()
+            rviz_text.header.frame_id = "livox_frame"
+            rviz_text.ns = "plotting"+ f'{ii}'
+            rviz_text.action = Marker.ADD
+            rviz_text.type = Marker.TEXT_VIEW_FACING
+            rviz_text.color = ColorRGBA(1,1,1,1)
+            rviz_text.scale.z = 1.2 
+            text_location = Point(i[2], i[3], height + 2.0)
+
+            rviz_text.pose.position= text_location
+            rviz_text.text = str(round(distance_value, 2)) + ' M'
+            rvizTextarray.markers.append(rviz_text)
+        #markerPub_text.publish(rvizTextarray)
 
         while not rospy.is_shutdown():
             #markerPub_left.publish(left_points)
@@ -351,7 +382,8 @@ if __name__ == "__main__":
             markerPub_answer.publish(answer_points)
             markerPub_answer.publish(answer_line_strip)
             markerPub_answer.publish(answer_line_list)
-            markerPub_text.publish(rviz_text)
+            #markerPub_text.publish(rviz_text)
+            markerPub_text.publish(rvizTextarray)
             rate.sleep()
             # plt the image of distance estimation on image
             plt.show()

@@ -4,10 +4,10 @@ import matplotlib.image as mpimg
 import numpy as np
 import csv
 
-sn = int(sys.argv[1]) if len(sys.argv)>1 else 7 #default 0-7517
+sn = int(sys.argv[1]) if len(sys.argv)>1 else 7 #default 7
 name = '%06d'%sn # 6 digit zeropadding
 img = f'../../../../dataset/training/image_2/{name}.png'
-binary = f'../../../../dataset/training/velodyne/{name}.bin'
+binary = f'../../../../dataset/training/velodyne1/{name}.bin'
 with open(f'../../../../dataset/training/calib/{name}.txt','r') as f:
     calib = f.readlines()
 
