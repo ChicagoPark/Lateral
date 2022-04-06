@@ -3,11 +3,13 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 import csv
+from ransacPlaneobject import *
 
 sn = int(sys.argv[1]) if len(sys.argv)>1 else 7 #default 7
 name = '%06d'%sn # 6 digit zeropadding
 img = f'../../../../dataset/training/image_2/{name}.png'
 binary = f'../../../../dataset/training/velodyne1/{name}.bin'
+pcd= f'../../../../dataset/training/velodyne/{name}.pcd'
 with open(f'../../../../dataset/training/calib/{name}.txt','r') as f:
     calib = f.readlines()
 
@@ -22,6 +24,11 @@ line 4th: rightlaneX
 line 5th: rightlaneY
 '''
 lane_csv = open("../../CSV_Communication/1_lane.csv")
+
+# get the plane pointcloud data and object pointcloud data
+planePCDarray, objectPCDarray = ransacPlaneobject(pcd)
+
+
 csvreader = csv.reader(lane_csv)
 rows = []
 for row in csvreader:
@@ -51,8 +58,11 @@ Tr_velo_to_cam = np.matrix([float(x) for x in calib[5].strip('\n').split(' ')[1:
 Tr_velo_to_cam = np.insert(Tr_velo_to_cam,3,values=[0,0,0,1],axis=0)
 
 # read raw data from binary
-scan = np.fromfile(binary, dtype=np.float32).reshape((-1,4))
+#scan = np.fromfile(binary, dtype=np.float32).reshape((-1,4))
+scan = planePCDarray
 points = scan[:, 0:3] # lidar xyz (front, left, up)
+
+print(points.shape)
 # TODO: use fov filter? 
 velo = np.insert(points,3,1,axis=1).T
 print(velo.shape)
@@ -87,7 +97,6 @@ for i in range(len(new_veloList)):
     #print(f"first: {project2Dx}/ second: {project2Dy}")
 
     index += 1
-    #print(f"영일{project2Dy}")
     # consider just the front view
     if veloList[0] >=0:
         # loop the left lane pixels
