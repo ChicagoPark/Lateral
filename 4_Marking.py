@@ -204,19 +204,25 @@ if __name__ == "__main__":
         left_points.scale.x = 0.2
         left_points.scale.y = 0.2
         left_line_strip.scale.x = 0.1
-        left_line_list.scale.x = 0.1
+        # set the lane's thickness
+        left_line_list.scale.x = 0.3
 
         # Points are green
+        left_points.color.r = 1.0
         left_points.color.g = 1.0
+        left_points.color.b = 0.0
         left_points.color.a = 1.0
 
         # Line strip is blue
-        left_line_strip.color.b = 1.0
+        left_line_strip.color.r = 0.0
+        left_line_strip.color.g = 1.0
+        left_line_strip.color.b = 0.0
         left_line_strip.color.a = 1.0
         
         # Line list is red
         left_line_list.color.r = 0.0
         left_line_list.color.g = 1.0
+        left_line_list.color.b = 0.0
         left_line_list.color.a = 1.0
         
         #g = open("left_lane.txt", "w")
@@ -227,8 +233,8 @@ if __name__ == "__main__":
             left_points.points.append(left)
             left_line_strip.points.append(left)
             left_line_list.points.append(left)
-            left = Point(left_lane_equat_point_x[i], left_lane_equat_point_y[i], height+1)
-            left_line_list.points.append(left)
+            #left = Point(left_lane_equat_point_x[i], left_lane_equat_point_y[i], height+1)
+            #left_line_list.points.append(left)
 
             #word = str(-left_lane_equat_point_y[i]) + ' ' + str(left_point_on_line)lane_equat_point_x[i]) + '\n'
             #g.write(word)
@@ -254,19 +260,25 @@ if __name__ == "__main__":
         right_points.scale.x = 0.2
         right_points.scale.y = 0.2
         right_line_strip.scale.x = 0.1
-        right_line_list.scale.x = 0.1
+        # set the lane's thickness
+        right_line_list.scale.x = 0.3
 
         # Points are green
+        right_points.color.r = 1.0
         right_points.color.g = 1.0
+        right_points.color.b = 0.0
         right_points.color.a = 1.0
-
-        # Line strip is blue
-        right_line_strip.color.b = 1.0
+        
+        # right color is yellow
+        right_line_strip.color.r = 1.0
+        right_line_strip.color.g = 1.0
+        right_line_strip.color.b = 0.0
         right_line_strip.color.a = 1.0
         
         # Line list is red
-        right_line_list.color.r = 0.0
+        right_line_list.color.r = 1.0
         right_line_list.color.g = 1.0
+        right_line_list.color.b = 0.0
         right_line_list.color.a = 1.0
 
 
@@ -280,8 +292,8 @@ if __name__ == "__main__":
 
             # The line list needs two points for each line
             right_line_list.points.append(right)
-            right = Point(right_lane_equat_point_x[i], right_lane_equat_point_y[i], height+1.0)
-            right_line_list.points.append(right)
+            #right = Point(right_lane_equat_point_x[i], right_lane_equat_point_y[i], height+1.0)
+            #right_line_list.points.append(right)
 
             #word = str(-right_lane_equat_point_y[i]) + ' ' + str(right_lane_equat_point_x[i]) + '\n'
             #g.write(word)
@@ -306,7 +318,8 @@ if __name__ == "__main__":
         answer_points.scale.x = 1.6
         answer_points.scale.y = 1.6
         answer_line_strip.scale.x = 0.1
-        answer_line_list.scale.x = 0.1
+        # set the answer line's thickness
+        answer_line_list.scale.x = 0.2
 
         # Points are green
         answer_points.color.g = 1.0

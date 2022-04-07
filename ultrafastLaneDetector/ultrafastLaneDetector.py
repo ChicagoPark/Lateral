@@ -275,9 +275,12 @@ class UltrafastLaneDetector():
                 # Draw a quadratic lines on the image
                 leftplotlist = np.array(leftplotlist, np.int32)
                 rightplotlist = np.array(rightplotlist, np.int32)
-
+                
+                #(B,G,R)
+                #cv2.polylines(visualization_img, [leftplotlist], False, (0,255,0), thickness=7)
                 cv2.polylines(visualization_img, [leftplotlist], False, (104,255,0), thickness=7)
-                cv2.polylines(visualization_img, [rightplotlist], False, (19,244,239), thickness=7)
+                #cv2.polylines(visualization_img, [rightplotlist], False, (0,0,255), thickness=7)
+                cv2.polylines(visualization_img, [rightplotlist], False, (0,244,239), thickness=7)
 
                 return visualization_img
 

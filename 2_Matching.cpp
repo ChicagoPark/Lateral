@@ -393,6 +393,10 @@ int main(int argc, char** argv)
   sensor_msgs::ImagePtr img_msg_obs = cv_bridge::CvImage(std_msgs::Header(), "bgr8", visImg_o).toImageMsg();
   sensor_msgs::ImagePtr img_msg_plane = cv_bridge::CvImage(std_msgs::Header(), "bgr8", visImg_p).toImageMsg();
 
+  //python code paste
+  int count_left = 18;
+  int left_lane[] = [[7.092, 2.469, -1.678], [7.953, 2.481, -1.665], [8.272, 2.463, -1.648], [8.832, 2.485, -1.652], [9.598, 2.496, -1.635], [10.069, 2.475, -1.623], [11.569, 2.525, -1.617], [13.095, 2.536, -1.6], [13.649, 2.533, -1.576], [14.257, 2.533, -1.579], [14.84, 2.546, -1.563], [16.462, 2.54, -1.538], [17.427, 2.549, -1.53], [19.735, 2.625, -1.51], [21.09, 2.666, -1.505], [22.76, 2.68, -1.487], [35.319, 2.836, -1.372], [45.916, 2.981, -1.268]];
+
   
   while (nh.ok())
   {
@@ -435,9 +439,13 @@ int main(int argc, char** argv)
     for (uint32_t i = 0; i < count_left; ++i)
     {
       geometry_msgs::Point p_l;
-      p_l.x = left_lane_point_x[i];
-      p_l.y = left_lane_point_y[i];
-      p_l.z = left_lane_point_z[i];
+      //p_l.x = left_lane_point_x[i];
+      //p_l.y = left_lane_point_y[i];
+      //p_l.z = left_lane_point_z[i];
+	  p_l.x = left_lane[i][0];
+      p_l.y = left_lane[i][1];
+      p_l.z = left_lane[i][2];
+	  
       left_points.points.push_back(p_l);
       left_line_strip.points.push_back(p_l); 
       // The line list needs two points for each line

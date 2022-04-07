@@ -103,41 +103,52 @@ for i in range(len(new_veloList)):
         for j in range(len(leftlaneX)):
             if int(project2Dx)==int(leftlaneX[j]) and int(project2Dy)==int(leftlaneY[j]):
                 leftlane3D.append([veloList[0], veloList[1], veloList[2]])
-                #leftlane3Dx = veloList[0]
-                #leftlane3Dy = veloList[1]
-                #leftlane3Dz = veloList[2]
 
         # loop the right lane pixels
         for j in range(len(rightlaneX)):
              if int(project2Dx)==int(rightlaneX[j]) and int(project2Dy)==int(rightlaneY[j]):
                 rightlane3D.append([veloList[0], veloList[1], veloList[2]])
-                #rightlane3Dx = veloList[0]
-                #rightlane3Dy = veloList[1]
-                #rightlane3Dz = veloList[2]
-        ''' 
-        for j in new_cam:
-            point_list = list(np.squeeze(np.asarray(j).reshape(-1)))
-            point3Dx= point_list[0]/point_list[1]
-            point3Dy = point_list[2]/point_list[1]
-            index+=1
-            for a in range(len(leftlaneX)):
-                # lane matching condition
-                if point3Dx == leftlaneX[a] and point3Dy == leftlaneY[a]:
-                    leftlane3Dx.append(veloList[0])
-                    leftlane3Dy.append(veloList[1])
-                    leftlane3Dz.append(veloList[2])
-            for b in range(len(rightlaneX)):
-                # lane matching condition
-                if point3Dx == rightlaneX[b] and point3Dy == rightlaneY[b]:
-                    rightlane3Dx.append(veloList[0])
-                    rightlane3Dy.append(veloList[1])
-                    rightlane3Dz.append(veloList[2])
-        '''
+
 
 leftlane3D = sorted(leftlane3D)
 rightlane3D = sorted(rightlane3D)
 print(leftlane3D)
 print(rightlane3D)
+
+# for c language matching code --------------------------------->>
+print("For C language Matching Code")
+print(f"count_left = {len(leftlane3D)};\nfloat left_lane_x[] = ", end='');print('{',end='')
+for i in range(len(leftlane3D)-1):
+    print(f"{leftlane3D[i][0]},",end='')
+print(leftlane3D[-1][0],end='');print('};')
+
+print(f"float left_lane_y[] = ", end='');print('{',end='')
+for i in range(len(leftlane3D)-1):
+    print(f"{leftlane3D[i][1]},",end='')
+print(leftlane3D[-1][1],end='');print('};')
+
+print(f"float left_lane_z[] = ", end='');print('{',end='')
+for i in range(len(leftlane3D)-1):
+    print(f"{leftlane3D[i][2]},",end='')
+print(leftlane3D[-1][2],end='');print('};')
+
+print(f"count_right = {len(rightlane3D)};\nfloat right_lane_x[] = ", end='');print('{',end='')
+for i in range(len(rightlane3D)-1):
+    print(f"{rightlane3D[i][0]},",end='')
+print(rightlane3D[-1][0],end='');print('};')
+
+print(f"float right_lane_y[] = ", end='');print('{',end='')
+for i in range(len(rightlane3D)-1):
+    print(f"{rightlane3D[i][1]},",end='')
+print(rightlane3D[-1][1],end='');print('};')
+
+print(f"float right_lane_z[] = ", end='');print('{',end='')
+for i in range(len(rightlane3D)-1):
+    print(f"{rightlane3D[i][2]},",end='')
+print(rightlane3D[-1][2],end='');print('};')
+# for c language matching code ---------------------------------<<
+
+
 
 #make left lane txt file
 with open('../../CSV_Communication/2_matched_left.txt', 'w') as left_lane_file:
@@ -148,44 +159,6 @@ with open('../../CSV_Communication/2_matched_left.txt', 'w') as left_lane_file:
 with open('../../CSV_Communication/2_matched_right.txt', 'w') as right_lane_file:
     for i in range(len(rightlane3D)):
         right_lane_file.write(f"{rightlane3D[i][1]} {rightlane3D[i][0]}\n")
-
-
-'''
-# loop the lidar points
-for i in new_velo:
-    
-    #veloList[0]: 3D x value
-    #veloList[1]: 3D y value
-    #veloList[2]: 3D z value
-    
-    veloList = list(np.squeeze(np.asarray(i).reshape(-1)))
-    if veloList[0] >=0:
-        # loop the projected camera pixels
-        index = 0
-        for j in new_cam:
-            point_list = list(np.squeeze(np.asarray(j).reshape(-1)))
-            point3Dx= point_list[0]/point_list[1]
-            point3Dy = point_list[2]/point_list[1]
-            index+=1
-            print(f"{index}th")
-            for a in range(len(leftlaneX)):
-                # lane matching condition
-                if point3Dx == leftlaneX[a] and point3Dy == leftlaneY[a]:
-                    leftlane3Dx.append(veloList[0])
-                    leftlane3Dy.append(veloList[1])
-                    leftlane3Dz.append(veloList[2])
-            for b in range(len(rightlaneX)):
-                # lane matching condition
-                if point3Dx == rightlaneX[b] and point3Dy == rightlaneY[b]:
-                    rightlane3Dx.append(veloList[0])
-                    rightlane3Dy.append(veloList[1])
-                    rightlane3Dz.append(veloList[2])
-
-print(leftlane3Dx)
-print(rightlane3Dx)
-'''
-
-
 
 
 
