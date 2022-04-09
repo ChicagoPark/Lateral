@@ -9,7 +9,7 @@
 
 
 ## [1] Project Goal
-<img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/139383767-c6116f15-713e-4ddb-9500-605f346a84ea.jpeg">
+<img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/162565112-7c3be6ca-e65a-4fc4-8860-b762a577a78b.png">
 
 `Goal: Obtaining accurate lateral distance between vehicles and adjacent lanes`
 
