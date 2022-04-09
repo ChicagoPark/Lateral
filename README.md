@@ -22,9 +22,9 @@
 
 ## [4] Project Pipeline
 
-<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/139428433-30e16219-0120-427c-8734-0794f9f40f71.png">
+<img width="750" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/162564892-2428b167-606e-46f7-bf85-bce40cf37345.jpeg">
 
-<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151820935-0ea2ff9a-f51b-4e29-bf96-2df0137be4ef.png">
+<img width="500" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151820935-0ea2ff9a-f51b-4e29-bf96-2df0137be4ef.png">
 
 ## [5] Result
 
