@@ -1,7 +1,6 @@
 # vehicle_lateral_positioning
-`Lateral distance, Lateral position, Sensor fusion, Deep learning, Neural network, Autonomous vehicle`
 
-`Real-time Lateral:` https://github.com/ChicagoPark/Lateral_Realtime
+`Real-time Version of Lateral Project:` https://github.com/ChicagoPark/Lateral_Realtime
 
 <img width="317" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/149541640-808f9392-58eb-4a47-841f-04c85de3b534.png"><img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/150671435-681e57cb-54b0-42df-8f66-32d344240a2d.png">
 
@@ -15,30 +14,71 @@
 
 
 ## [2] Project Motivation
-`In advanced driving assistance systems or autonomous driving systems, accurate localization of surrounding vehicles is very important for path planning and anomaly detection through monitoring and predicting the movement and behavior of the vehicles.`
+
+> The accurate localization of nearby vehicles in advanced driving assistance systems or autonomous
+> driving systems is very important for maneuver and path planning or anomaly detection through the
+> monitoring and prediction of the behavior of the vehicles. Particularly, the lateral position of
+> a vehicle with respect to lane markers is an essential information for such tasks.
+
 
 ## [3] Essential Idea
-`We propose a novel method to accurately estimate the lateral distance of a nearby vehicle to lane markers by the fusion of vision and lidar sensors as well as the fusion of deep neural networks in 2D and 3D space.`
 
-## [4] Project Pipeline
+> we propose a novel method to accurately estimate the lateral distance of a front vehicle to
+> lane markers by the fusion of camera and LiDAR sensors, as well as the fusion of deep neural
+> networks in 2D and 3D domains.
+
+
+## [4]  Overall system architecture
 
 <img width="750" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/162564892-2428b167-606e-46f7-bf85-bce40cf37345.jpeg">
 
-<img width="500" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151820935-0ea2ff9a-f51b-4e29-bf96-2df0137be4ef.png">
 
-## [5] Result
+## [4-1] Segmentation of a LiDAR point cloud
 
-<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821185-27cdca71-a7a0-4550-abd4-c7e4576170c8.png">
+<img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671866-3e481ade-b01d-4497-ba55-78e4e0204abd.jpeg">
 
-## [6] Expected Benefits
-<img width="600" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/151821453-0446fe68-bac1-4a4c-b7a4-f920bce0f7bd.png">
+## [4-2] Projection of LiDAR points onto the image plane of a front-view camera
+
+<img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671867-3a989e59-ce7f-42e8-a038-be97a671a85a.jpeg">
+
+## [4-3]  Lane detection on Image using the Ultrafast-ResNet model
+
+<img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671868-49052412-5aca-422d-b03f-2ed6ee0cb443.jpeg">
+
+## [4-4] 3D object detection on 3D domain using the PV-RCNN model
+
+<img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671870-02d2fc41-558f-4d3f-8ff0-4bd23c25bcfb.png">
 
 
-## [7] Dataset preparation
-`Using KITTI Dataset to label 3D point on lanes.`
+## [4-5] Selection of LiDAR points on the lanes
+
+<img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671872-1685554d-c865-43f7-901c-4b6de904084a.jpeg">
+
+## [4-6] Visualization of the resulting lateral distances from lanes to vehicles
+
+<img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671878-73a4c49c-0e20-4762-96e1-3c2ee0564301.png">
 
 
 
+## [5] Expected Benefits
+
+> Our framework provides the location of other vehicles in respect to the lanes of the ego-vehicle, whereas previous
+> work usually offers the vehicle location in respect to the ego-vehicle.
+> We strongly believe that our work can provide more useful information for the detection of the anomaly behavior or the
+> trajectory prediction of surrounding vehicles. Furthermore, the lateral distance values can be shared with networked
+> vehicles around an ego-vehicle to strengthen the traffic safety. Thus, our work can be a valuable addition in vehicle
+> communication and network research as well.
+
+
+## [extra] Dataset labeling
+
+<img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163672005-96184a6f-357b-4230-b6fb-21ff35ec6145.jpeg">
+
+> As there is no dataset for vehicle’s lateral distances measured from the lanes of an ego-vehicle, we created a dataset
+> by ourselves. We extracted 1,281 frames suitable for this study from the KITTI dataset first, and then searched for
+> the closest points to a vehicle on the left and right lanes of the ego-vehicle.
+
+<!--
 ##  CODE Explanation
 
 ### 1️⃣1_Lane_2D.py
@@ -57,23 +97,9 @@ Get quadratic equations on 3D (output: coefficient of quadratic equations)
 ```python
 Visualize overlapped lanes (output: visualizing RVIZ)
 ```
-
-### etc: label_plotting.py
-```python
-Visualize label data
-```
+-->
 
 
--------
-## Paperwork Ideabank
-1. save lane detection output into the text file for csv file
-2. get the '1.' value through method
--------
-
--------
-## Roles
-Bounding Box Visualization: /home/kaai/chicago_ws/src/kitti_visualizer/launch/object_visualizer.launch
-Label Points Visualization: /home/kaai/chicago_ws/src/first_pkg/src/label_plotting.py
 
 
 -------
