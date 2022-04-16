@@ -1,4 +1,4 @@
-# vehicle_lateral_positioning
+# Lateral
 
 `Real-time Version of Lateral Project:` https://github.com/ChicagoPark/Lateral_Realtime
 
