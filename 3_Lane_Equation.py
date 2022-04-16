@@ -1,11 +1,5 @@
 import numpy as np
 
-# 3D 상 Point 따기
-
-'''
-Put the value from previous code
-'''
-
 
 # generate the lane list
 leftx =[]
