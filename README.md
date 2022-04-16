@@ -1,4 +1,4 @@
-# `Published full paper would be available in June.`
+# `Published full paper would be available in June, 2022.`
 
 `Real-time Version of Lateral Project:` https://github.com/ChicagoPark/Lateral_Realtime
 
