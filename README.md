@@ -33,28 +33,28 @@
 <img width="750" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/162564892-2428b167-606e-46f7-bf85-bce40cf37345.jpeg">
 
 
-## [4-1] Segmentation of a LiDAR point cloud
+### [4-1] (Detailed Process) Segmentation of a LiDAR point cloud
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671866-3e481ade-b01d-4497-ba55-78e4e0204abd.jpeg">
 
-## [4-2] Projection of LiDAR points onto the image plane of a front-view camera
+### [4-2] (Detailed Process) Projection of LiDAR points onto the image plane of a front-view camera
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671867-3a989e59-ce7f-42e8-a038-be97a671a85a.jpeg">
 
-## [4-3]  Lane detection on Image using the Ultrafast-ResNet model
+### [4-3] (Detailed Process) Lane detection on Image using the Ultrafast-ResNet model
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671868-49052412-5aca-422d-b03f-2ed6ee0cb443.jpeg">
 
-## [4-4] 3D object detection on 3D domain using the PV-RCNN model
+### [4-4] (Detailed Process) 3D object detection on 3D domain using the PV-RCNN model
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671870-02d2fc41-558f-4d3f-8ff0-4bd23c25bcfb.png">
 
 
-## [4-5] Selection of LiDAR points on the lanes
+### [4-5] (Detailed Process) Selection of LiDAR points on the lanes
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671872-1685554d-c865-43f7-901c-4b6de904084a.jpeg">
 
-## [4-6] Visualization of the resulting lateral distances from lanes to vehicles
+### [4-6] (Detailed Process) Visualization of the resulting lateral distances from lanes to vehicles
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671878-73a4c49c-0e20-4762-96e1-3c2ee0564301.png">
 
