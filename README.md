@@ -1,4 +1,6 @@
-# `Published full paper would be available in June, 2022.`
+`Supported by the National Research Foundation of Korea(NRF) grant funded by the Korea government(MSIT)`
+
+### `Published full paper would be available in June, 2022.`
 
 `Real-time Version of Lateral Project:` https://github.com/ChicagoPark/Lateral_Realtime
 
@@ -15,17 +17,17 @@
 
 ## [2] Project Motivation
 
-> The accurate localization of nearby vehicles in advanced driving assistance systems or autonomous
-> driving systems is very important for maneuver and path planning or anomaly detection through the
-> monitoring and prediction of the behavior of the vehicles. Particularly, the lateral position of
-> a vehicle with respect to lane markers is an essential information for such tasks.
+> The `precise localization of nearby vehicles` in advanced driving assistance systems or autonomous
+> driving systems is imperative for path planning or anomaly detection by monitoring and predicting
+> the future behavior of the vehicles. Mainly, `the lateral position of a vehicle with respect to lane
+> markers is essential information` for such tasks.
 
 
 ## [3] Essential Idea
 
-> we propose a novel method to accurately estimate the lateral distance of a front vehicle to
-> lane markers by the fusion of camera and LiDAR sensors, as well as the fusion of deep neural
-> networks in 2D and 3D domains.
+> We `propose a novel method to accurately estimate the lateral distance` of a front vehicle to
+> lane markers `by combining camera and LiDAR sensors` and the `fusion of deep neural networks` in
+> 2D and 3D domains.
 
 
 ## [4]  Overall system architecture
@@ -37,46 +39,73 @@
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671866-3e481ade-b01d-4497-ba55-78e4e0204abd.jpeg">
 
+> We utilized the RANdom SAmple Consensus (RANSAC) function to `discriminate point clouds for road
+> and obstacles` separately.
+
+
 ### [4-2] (Detailed Process) Projection of LiDAR points onto the image plane of a front-view camera
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671867-3a989e59-ce7f-42e8-a038-be97a671a85a.jpeg">
+
+> We placed point clouds on the image from a 3D point cloud and assigned the color of points on the
+> image according to the intensity of point cloud data for visualization. We `utilize projected output
+> from the sensor dimension upgrading process for lane matching`.
 
 ### [4-3] (Detailed Process) Lane detection on Image using the Ultrafast-ResNet model
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671868-49052412-5aca-422d-b03f-2ed6ee0cb443.jpeg">
 
+> We use `Ultrafase-ResNot model,` which can detect the lane in harsh weather conditions and various environments.
+> Additionally, to get stable and constant lane detection results, we fitted each lane's points `using a quadratic
+> curve` and `plotted the lane` as far as possible within a visible road area.
+
+
 ### [4-4] (Detailed Process) 3D object detection on 3D domain using the PV-RCNN model
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671870-02d2fc41-558f-4d3f-8ff0-4bd23c25bcfb.png">
 
+> We use the `PV-RCNN model,` which considers the orientation of a vehicle and covers the vehicle with twelve lines
+> to indicate bounding boxes. Through this 3D detection result, we `can estimate the lateral distance from the exact
+> mid-low point of vehicles to the lanes`
 
 ### [4-5] (Detailed Process) Selection of LiDAR points on the lanes
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671872-1685554d-c865-43f7-901c-4b6de904084a.jpeg">
 
+> To obtain matching point points on lanes, `first, we get the quadratic equations for the lane markers` on the image
+> domain and get the corresponding pixels occupied by the curves. Next, we `search for all projected points on the
+> pixels` and keep them in dynamic memory.
+> Through this process, `we can upgrade the dimension reliably.`
+
+
+
 ### [4-6] (Detailed Process) Visualization of the resulting lateral distances from lanes to vehicles
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163671878-73a4c49c-0e20-4762-96e1-3c2ee0564301.png">
 
+> We obtain the lateral distance by `calculating the minimum distance` from the mid-low point of the vehicle bounding
+> box to the curve.
+> Last but not least, we `represent the lateral distance` in meters using text markers, and we indicate the lateral
+> locations of vehicles using pink line markers.
 
 
 ## [5] Expected Benefits
 
-> Our framework provides the location of other vehicles in respect to the lanes of the ego-vehicle, whereas previous
-> work usually offers the vehicle location in respect to the ego-vehicle.
-> We strongly believe that our work can provide more useful information for the detection of the anomaly behavior or the
-> trajectory prediction of surrounding vehicles. Furthermore, the lateral distance values can be shared with networked
-> vehicles around an ego-vehicle to strengthen the traffic safety. Thus, our work can be a valuable addition in vehicle
-> communication and network research as well.
+> Our framework provides the location of other vehicles regarding the lanes of the ego-vehicle, whereas previous
+> work usually offers the vehicle location with respect to the ego-vehicle. We strongly believe that our work can
+> provide more helpful information for detecting the anomaly behavior or the trajectory prediction of surrounding vehicles.
+> Furthermore, the lateral distance values can be shared with networked vehicles around an ego-vehicle to strengthen traffic
+> safety.
+> Thus, our work can be a `valuable addition to vehicle communication and network research`.
 
 
 ## [extra] Dataset labeling
 
 <img width="350" alt="Overall_Pipeline" src="https://user-images.githubusercontent.com/73331241/163672005-96184a6f-357b-4230-b6fb-21ff35ec6145.jpeg">
 
-> As there is no dataset for vehicle’s lateral distances measured from the lanes of an ego-vehicle, we created a dataset
-> by ourselves. We extracted 1,281 frames suitable for this study from the KITTI dataset first, and then searched for
-> the closest points to a vehicle on the left and right lanes of the ego-vehicle.
+> As `there is no dataset for vehicle’s lateral distances` measured from the lanes of an ego-vehicle, we `created a dataset`
+> by ourselves. We first extracted 1,281 frames suitable for this study from the KITTI dataset and then searched for the
+> closest points to a vehicle on the left and right lanes of the ego vehicle.
 
 <!--
 ##  CODE Explanation
