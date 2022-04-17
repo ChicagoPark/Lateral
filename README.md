@@ -1,12 +1,6 @@
 `Supported by the National Research Foundation of Korea(NRF) grant funded by the Korea government(MSIT)`
 
-### `Published full paper would be available in June, 2022.`
-
 `Real-time Version of Lateral Project:` https://github.com/ChicagoPark/Lateral_Realtime
-
-<img width="317" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/149541640-808f9392-58eb-4a47-841f-04c85de3b534.png"><img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/150671435-681e57cb-54b0-42df-8f66-32d344240a2d.png">
-
-[Abstract_Paper.pdf](https://github.com/ChicagoPark/vehicle_lateral_positioning/files/7871472/Abstract_Paper.pdf)
 
 
 ## [1] Project Goal
@@ -280,6 +274,14 @@ https://github.com/ChicagoPark/LiDAR_Projection
 ~/chicago_ws $ rosrun first_pkg 3D_Lane_Marker
 
 -->
+
+## Abstract Paper and Poster (Nov 2021)
+`Published full paper would be available in June, 2022.`
+
+<img width="317" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/149541640-808f9392-58eb-4a47-841f-04c85de3b534.png"><img width="300" alt="Distance Picture" src="https://user-images.githubusercontent.com/73331241/150671435-681e57cb-54b0-42df-8f66-32d344240a2d.png">
+
+[Abstract_Paper.pdf](https://github.com/ChicagoPark/vehicle_lateral_positioning/files/7871472/Abstract_Paper.pdf)
+
 
 ## Certificate
 
