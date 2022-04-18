@@ -17,7 +17,7 @@ for i in rightFile:
 	rightx.append(i[1])
 	righty.append(i[0])
 
-# 좌측 우측 중 최대 x 값을 먼저 뽑고 int 형으로 변환하기
+# Pick the largest x value from the left and right first and convert it to type int
 
 max_distance = 0
 for i in leftx:
@@ -28,18 +28,18 @@ for j in rightx:
     if max_distance < j:
         max_distance = int(j)
 
-# 2차 함수로 플라팅하기
+# Plot quadratic function
         
 left_fit = np.polyfit(leftx, lefty, 2) 
 right_fit = np.polyfit(rightx, righty, 2)
 
-# 라이다 좌표축 기준으로 x, y 값을 정의하였다.
+# The x and y values were defined based on the lidar coordinate axis.
 left_fitx = []
 left_fity = []
 right_fitx = []
 right_fity = []
 
-# for 반복문으로 최대 값 전까지 1m 단위로 left(right) 방정식 에 대한 좌표값을 받고 right 에 대한 좌표값을 받기
+# Obtain the coordinate value for the left(right) equation in 1m increments until the maximum value with a for loop and get the coordinate value for the right
 # for left lane
 for i in range(max_distance+1):
     left_fitx.append(i)
@@ -55,10 +55,9 @@ print(left_fity)
 print(right_fitx)
 print(right_fity)
 '''
-# C++ 코드에 넘겨주기
 
 
-# 1. left x 좌표 넣기
+# 1. put the left x coordinate
 print("float left_lane_equat_point_x[] = {", end='')
 
 for i in range(max_distance + 1):
@@ -67,7 +66,7 @@ for i in range(max_distance + 1):
         break
     print(left_fitx[i], ',', end='')
     
-# 2. left y 좌표 넣기
+# 2. put left y coordinate
 print("float left_lane_equat_point_y[] = {", end='')
 
 for i in range(max_distance + 1):
@@ -77,7 +76,7 @@ for i in range(max_distance + 1):
     print(left_fity[i], ',', end='')
     
         
-# 3. right x 좌표 넣기
+# 3. put right x coordinate
 print("float right_lane_equat_point_x[] = {", end='')
 
 for i in range(max_distance+1):
@@ -87,7 +86,7 @@ for i in range(max_distance+1):
     print(right_fitx[i], ',', end='')
     
         
-# 4. right y 좌표 넣기
+# 4. put right y coordinate
 print("float right_lane_equat_point_y[] = {", end='')
 
 for i in range(max_distance+1):
