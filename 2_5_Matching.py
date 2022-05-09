@@ -7,16 +7,31 @@ from ransacPlaneobject import *
 
 from sklearn import linear_model, datasets
 
-def ransacPlot(xArray, yArray, side):
+def ransacPlot(xArray, yArray, side, maximum_distance = 50):
     # Robustly fit linear model with RANSAC algorithm
     ransac = linear_model.RANSACRegressor()
     ransac.fit(xArray, yArray)
     inlier_mask = ransac.inlier_mask_
     outlier_mask = np.logical_not(inlier_mask)
 
-    # Predict data of estimated models
-    line_X = np.arange(xArray.min(), xArray.max())[:, np.newaxis]
+    # Predict data of estimated models: line_X is X coordinates / line_y_ransac is Y coordinates
+    #line_X = np.arange(xArray.min(), xArray.max())[:, np.newaxis]
+    line_X = np.arange(0, maximum_distance)[:, np.newaxis]
     line_y_ransac = ransac.predict(line_X)
+
+    
+    # prepare to write in text file
+    if side == 'left':
+        with open('../../CSV_Communication/left_lane_Ransac.txt', 'w') as left_lane_file:
+            for ii, v in enumerate(line_X):
+                left_lane_file.write(f"{-float(line_y_ransac[ii])} {ii}\n")
+
+
+    else:
+        with open('../../CSV_Communication/right_lane_Ransac.txt', 'w') as right_lane_file:
+            for ii, v in enumerate(line_X):
+                right_lane_file.write(f"{-float(line_y_ransac[ii])} {ii}\n")
+
 
     lw = 2
     plt.scatter(
@@ -116,6 +131,7 @@ new_camList = list(np.squeeze(np.asarray(new_cam)))
 print("YOUNGIL")
 
 index = 0
+
 # loop the lidar points
 for i in range(len(new_veloList)):
     '''
@@ -173,6 +189,13 @@ rightMinY = min(rightlane3D[0][1], rightlane3D[-1][1])
 rightMaxX = rightlane3D[-1][0]
 rightMaxY = max(rightlane3D[0][1], rightlane3D[-1][1])
 
+print("----YOUGNIL TEXT")
+
+print(leftMaxX)
+print(rightMaxX)
+
+print("YOUGNIL TEXT----")
+
 leftPointinRange = []
 rightPointinRange = []
 
@@ -213,19 +236,15 @@ for i in range(len(new_veloList_with_intensity)):
             rightXXX.append(veloList[0])
             rightYYY.append(veloList[1])
 
-print("Length: ")
-print(len(leftXXX))
-print(len(rightXXX))
-print("----")
 
 
 leftX_RansacData = np.array(leftXXX).reshape(-1,1)
 leftY_RansacData = np.array(leftYYY).reshape(-1,1)
-ransacPlot(leftX_RansacData, leftY_RansacData,'left')
+ransacPlot(leftX_RansacData, leftY_RansacData,'left', rightMaxX)
 
 rightX_RansacData = np.array(rightXXX).reshape(-1,1)
 rightY_RansacData = np.array(rightYYY).reshape(-1,1)
-ransacPlot(rightX_RansacData, rightY_RansacData,'right')
+ransacPlot(rightX_RansacData, rightY_RansacData,'right', rightMaxX)
 '''
 # Robustly fit linear model with RANSAC algorithm
 ransac = linear_model.RANSACRegressor()

@@ -28,12 +28,15 @@ class NearestPoint(object):
 
     def __call__(self, xy_point, side, point_on_lane, sign, direction):
         assert side == 'left' or side == 'right', 'Type among left or right'
-        distance = self.left_line.distance(xy_point)
+        if side == 'left':
+            distance = self.left_line.distance(xy_point)
+        else:
+            distance = self.right_line.distance(xy_point)
         print(f'Distance to line({side}): {sign}', distance, 'm')
         
         instant_resultList = [point_on_lane.y, -point_on_lane.x, distance]
         
-        txt_file.write(f"{sn} {direction} {xy_point.y} {xy_point.x} {point_on_lane.y} {point_on_lane.x} {sign}{distance}\n")
+        txt_file.write(f"{sn} {direction} {xy_point.y} {-xy_point.x} {point_on_lane.y} {-point_on_lane.x} {sign}{distance} ({side})\n")
 
         return instant_resultList
             
@@ -52,22 +55,23 @@ class NearestPoint(object):
                      color='red', marker='o', scalex=False, scaley=False)
             fig.canvas.draw()
 
-            print(point.x, point.y)
-            print(point_on_line.x, point_on_line.y)
+            print(f"x: {point.x}, x:{point.y}")
+            print(f"x: {point_on_line.x}, x:{point_on_line.y}")
 
             sign = ''
             direction = ''
-            if point.y > point_on_line.y:
-                sign = '-'
-            else:
-                sign = '+'
+            
 
-            if int(i[-1]) >= 0:
+            if float(i[-1]) >= 0:
                 direction = "same"
             else:
                 direction = "opposite"
 
-
+            if -point.x > -point_on_line.x:
+                sign = '+'
+            else:
+                sign = '-'
+                direction = "same"
 
             # get the distance in meter unit
             resultList = resultList + [point.y, -point.x] + self.__call__(point, 'left', point_on_line, sign, direction)
@@ -80,15 +84,17 @@ class NearestPoint(object):
 
             sign = ''
             direction = ''
-            if point.y > point_on_line.y:
-                sign = '+'
-            else:
-                sign = '-'
-
-            if i[-1] >= 0:
+           
+            if float(i[-1]) >= 0:
                 direction = "same"
             else:
                 direction = "opposite"
+
+            if -point.x < -point_on_line.x:
+                sign = '+'
+            else:
+                sign = '-'
+                direction = "same"
 
             # get the distance in meter unit
             resultList = resultList + [point.y, -point.x] + self.__call__(point, 'right', point_on_line, sign, direction)
@@ -126,16 +132,16 @@ if __name__ == "__main__":
     #label_file = '/home/kaai/dataset/training/label_2/000192.txt'
 
     # initial starting location I might want to move to the param listesultList = resultList + [point.y, -point.x] + self.__call__(point, 'right', point_on_line)
-    h = rospy.get_param("height", 100)
-    w = rospy.get_param("width", 100)
+    #h = rospy.get_param("height", 100)
+    #w = rospy.get_param("width", 100)
     
     # make a list which contains labeled line
     label_list = []
 
     height = -1.50115
     
-    l_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/left_lane.txt')
-    r_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/right_lane.txt')
+    l_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/left_lane_Ransac.txt')
+    r_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/right_lane_Ransac.txt')
     o_coords = np.loadtxt('/home/kaai/chicago_ws/src/CSV_Communication/object.txt')
     # get the lane list
     left_lane_equat_point_x = []
@@ -159,8 +165,10 @@ if __name__ == "__main__":
 
     left_point_list = []
     right_point_list = []
-    max_point = float(l_coords[l_coords.shape[0] - 1][1]) # indicate tesultList = resultList + [point.y, -point.x] + self.__call__(point, 'right', point_on_line)he maximum value from lane equation
+    max_point_l = float(l_coords[l_coords.shape[0] - 1][1]) # indicate tesultList = resultList + [point.y, -point.x] + self.__call__(point, 'right', point_on_line)he maximum value from lane equation
     # remove the object point which has bigger value than the maximum esultList = resultList + [point.y, -point.x] + self.__call__(point, 'right', point_on_line)point
+    max_point_r = float(r_coords[r_coords.shape[0]-1][1])
+    max_point = max(max_point_l, max_point_r)
     for i in range(len(object_list)):
         if object_list[i][1] > max_point:
             del object_list[i:]
@@ -187,7 +195,7 @@ if __name__ == "__main__":
             label = line.strip().split(' ')
             src = line
             
-            if len(label) > 16:
+            if len(label) > 1:
                 cls_type = label[0]
                 cls_id = cls_type_to_id(cls_type)
                 truncation = float(label[1])
@@ -199,7 +207,7 @@ if __name__ == "__main__":
                 l = float(label[10])
                 #objectLocation = np.array((float(label[11]), float(label[12]), float(label[13])), dtype=np.float32)
                 #dis_to_cam = np.linalg.norm(objectLocation)
-                ry = float(label[14])
+                #ry = float(label[14])
                 #score = float(label[15]) if label.__len__() == 16 else -1.0
                 #level_str = None
 
@@ -214,7 +222,7 @@ if __name__ == "__main__":
     def sortSecond(val):
         return val[1]
     objectList.sort(key=sortSecond)
-    print(objectList)
+    #print(objectList)
     for i in range(len(objectList)):
         if objectList[i][1] > max_point:
             del objectList[i:]
