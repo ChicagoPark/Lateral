@@ -101,6 +101,10 @@
 > by ourselves. We first extracted 1,281 frames suitable for this study from the KITTI dataset and then searched for the
 > closest points to a vehicle on the left and right lanes of the ego vehicle.
 
+----
+
+## `Additional developments of this research would be updated in this repository soon. (June 2022)`
+
 <!--
 ##  CODE Explanation
 
@@ -126,6 +130,7 @@ Visualize overlapped lanes (output: visualizing RVIZ)
 
 
 -------
+
 <!--
 ## Minimum Distance Code
 ```bash
@@ -274,6 +279,7 @@ https://github.com/ChicagoPark/LiDAR_Projection
 ~/chicago_ws $ rosrun first_pkg 3D_Lane_Marker
 
 -->
+
 
 ## Abstract Paper and Poster (Nov 2021)
 `Published full paper would be available in June, 2022.`
