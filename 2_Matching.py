@@ -88,13 +88,9 @@ for i in range(len(new_veloList)):
     veloList = list(np.squeeze(np.asarray(new_velo[i]).reshape(-1)))
     
     onecamList = list(np.squeeze(np.asarray(new_camList[i]).reshape(-1)))
-    
-    #print(f"1st: {onecamList[0]} / 2nd: {onecamList[1]} / 3rd: {onecamList[2]}")
 
     project2Dx= onecamList[0]/onecamList[2]
     project2Dy = onecamList[1]/onecamList[2]
-
-    #print(f"first: {project2Dx}/ second: {project2Dy}")
 
     index += 1
     # consider just the front view
@@ -159,8 +155,6 @@ with open('../../CSV_Communication/2_matched_left.txt', 'w') as left_lane_file:
 with open('../../CSV_Communication/2_matched_right.txt', 'w') as right_lane_file:
     for i in range(len(rightlane3D)):
         right_lane_file.write(f"{rightlane3D[i][1]} {rightlane3D[i][0]}\n")
-
-
 
 # get u,v,z
 cam[:2] /= cam[2,:]
