@@ -1,7 +1,6 @@
 import numpy as np
 
-
-# generate the lane list
+# create the lane list
 leftx =[]
 lefty =[]
 rightx =[]
