@@ -1,6 +1,6 @@
 `Supported by the National Research Foundation of Korea(NRF) grant funded by the Korea government(MSIT)`
 
-`Real-time Version of Lateral Project:` https://github.com/ChicagoPark/Lateral_Realtime
+`Real-time Version of Lateral Distance Project:` https://github.com/ChicagoPark/Lateral_Realtime
 
 
 ## [1] Project Goal
